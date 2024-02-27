@@ -83,7 +83,7 @@ class Service(Generic[_T_RpcServiceProtocol, _T_ApiProtocol]):
 
         self._log = logging.getLogger(service_name)
         self._log.info(f"Starting service {self._service_name} ...")
-        self._log.info(f"cryptomines-blockchain version: {chia_full_version_str()}")
+        self._log.info(f"corpochain version: {chia_full_version_str()}")
 
         self.service_config = self.config[service_name]
 
@@ -233,7 +233,7 @@ class Service(Generic[_T_RpcServiceProtocol, _T_ApiProtocol]):
     async def setup_process_global_state(self) -> None:
         # Being async forces this to be run from within an active event loop as is
         # needed for the signal handler setup.
-        proctitle_name = f"cryptomines_{self._service_name}"
+        proctitle_name = f"corpochain_{self._service_name}"
         setproctitle(proctitle_name)
 
         global main_pid

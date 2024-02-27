@@ -7,9 +7,9 @@ from chia.rpc.rpc_client import RpcClient
 
 class HarvesterRpcClient(RpcClient):
     """
-    Client to Cryptomines RPC, connects to a local harvester. Uses HTTP/JSON, and converts back from
+    Client to Corpochain RPC, connects to a local harvester. Uses HTTP/JSON, and converts back from
     JSON into native python objects before returning. All api calls use POST requests.
-    Note that this is not the same as the peer protocol, or wallet protocol (which run Cryptomines's
+    Note that this is not the same as the peer protocol, or wallet protocol (which run Corpochain's
     protocol on top of TCP), it's a separate protocol on top of HTTP that provides easy access
     to the full node.
     """

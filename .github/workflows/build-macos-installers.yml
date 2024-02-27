@@ -120,7 +120,7 @@ jobs:
           python3 -m venv ../venv
           . ../venv/bin/activate
           pip install setuptools_scm
-          echo "CRYPTOMINES_INSTALLER_VERSION=$(python3 ./build_scripts/installer-version.py)" >> "$GITHUB_OUTPUT"
+          echo "CORPOCHAIN_INSTALLER_VERSION=$(python3 ./build_scripts/installer-version.py)" >> "$GITHUB_OUTPUT"
           deactivate
 
       - name: Setup Python environment
@@ -210,18 +210,18 @@ jobs:
       - name: Prepare GUI cache
         id: gui-ref
         run: |
-          gui_ref=$(git submodule status cryptomines-blockchain-gui | sed -e 's/^ //g' -e 's/ cryptomines-blockchain-gui.*$//g')
+          gui_ref=$(git submodule status corpochain-gui | sed -e 's/^ //g' -e 's/ corpochain-gui.*$//g')
           echo "${gui_ref}"
           echo "GUI_REF=${gui_ref}" >> "$GITHUB_OUTPUT"
-          echo "rm -rf ./cryptomines-blockchain-gui"
-          rm -rf ./cryptomines-blockchain-gui
+          echo "rm -rf ./corpochain-gui"
+          rm -rf ./corpochain-gui
 
       - name: Cache GUI
         uses: actions/cache@v3
         id: cache-gui
         with:
-          path: ./cryptomines-blockchain-gui
-          key: ${{ runner.os }}-${{ matrix.os.name }}-cryptomines-blockchain-gui-${{ steps.gui-ref.outputs.GUI_REF }}
+          path: ./corpochain-gui
+          key: ${{ runner.os }}-${{ matrix.os.name }}-corpochain-gui-${{ steps.gui-ref.outputs.GUI_REF }}
 
       - if: steps.cache-gui.outputs.cache-hit != 'true'
         name: Build GUI
@@ -232,7 +232,7 @@ jobs:
 
       - name: Build MacOS DMG
         env:
-          CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
+          CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
           NOTARIZE: ${{ steps.check_secrets.outputs.HAS_APPLE_SECRET }}
           APPLE_NOTARIZE_USERNAME: "${{ secrets.APPLE_NOTARIZE_USERNAME }}"
           APPLE_NOTARIZE_PASSWORD: "${{ secrets.APPLE_NOTARIZE_PASSWORD }}"
@@ -245,7 +245,7 @@ jobs:
       - name: Upload MacOS artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: cryptomines-installers-macos-dmg-${{ matrix.os.name }}
+          name: corpochain-installers-macos-dmg-${{ matrix.os.name }}
           path: ${{ github.workspace }}/build_scripts/final_installer/
 
       - name: Install AWS CLI
@@ -260,7 +260,7 @@ jobs:
       - name: Create Checksums
         run: |
           ls
-          shasum -a 256 ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg > ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg.sha256
+          shasum -a 256 ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg > ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg.sha256
 
       - name: Configure AWS credentials
         if: steps.check_secrets.outputs.HAS_AWS_SECRET
@@ -272,42 +272,42 @@ jobs:
       - name: Upload to s3
         if: steps.check_secrets.outputs.HAS_AWS_SECRET
         env:
-          CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
+          CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
         run: |
           GIT_SHORT_HASH=$(echo "${GITHUB_SHA}" | cut -c1-8)
-          CHIA_DEV_BUILD=${CRYPTOMINES_INSTALLER_VERSION}-$GIT_SHORT_HASH
+          CHIA_DEV_BUILD=${CORPOCHAIN_INSTALLER_VERSION}-$GIT_SHORT_HASH
           echo "CHIA_DEV_BUILD=$CHIA_DEV_BUILD" >> "$GITHUB_ENV"
-          aws s3 cp ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg s3://download.chia.net/dev/Chia-${CHIA_DEV_BUILD}${{ matrix.os.file-suffix }}.dmg
+          aws s3 cp ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg s3://download.chia.net/dev/Chia-${CHIA_DEV_BUILD}${{ matrix.os.file-suffix }}.dmg
 
       - name: Create torrent
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: env.FULL_RELEASE == 'true'
         run: |
-          py3createtorrent -f -t udp://tracker.opentrackr.org:1337/announce ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg -o ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg.torrent --webseed https://download.chia.net/install/Chia-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg
+          py3createtorrent -f -t udp://tracker.opentrackr.org:1337/announce ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg -o ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg.torrent --webseed https://download.chia.net/install/Chia-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg
           ls ${{ github.workspace }}/build_scripts/final_installer/
-          gh release upload $RELEASE_TAG ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg.torrent
+          gh release upload $RELEASE_TAG ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg.torrent
 
       - name: Upload Dev Installer
         if: steps.check_secrets.outputs.HAS_AWS_SECRET && github.ref == 'refs/heads/main'
         env:
-          CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
+          CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
         run: |
-          aws s3 cp ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg s3://download.chia.net/latest-dev/Chia${{ matrix.os.file-suffix }}_latest_dev.dmg
-          aws s3 cp ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg.sha256 s3://download.chia.net/latest-dev/Chia${{ matrix.os.file-suffix }}_latest_dev.dmg.sha256
+          aws s3 cp ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg s3://download.chia.net/latest-dev/Chia${{ matrix.os.file-suffix }}_latest_dev.dmg
+          aws s3 cp ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg.sha256 s3://download.chia.net/latest-dev/Chia${{ matrix.os.file-suffix }}_latest_dev.dmg.sha256
 
       - name: Upload Release Files
         if: steps.check_secrets.outputs.HAS_AWS_SECRET && env.FULL_RELEASE == 'true'
         run: |
-          aws s3 cp ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg s3://download.chia.net/install/
-          aws s3 cp ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg.sha256 s3://download.chia.net/install/
-          aws s3 cp ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg.torrent s3://download.chia.net/torrents/
+          aws s3 cp ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg s3://download.chia.net/install/
+          aws s3 cp ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg.sha256 s3://download.chia.net/install/
+          aws s3 cp ${{ github.workspace }}/build_scripts/final_installer/Chia-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}${{ matrix.os.file-suffix }}.dmg.torrent s3://download.chia.net/torrents/
 
       - name: Upload release artifacts
         if: env.RELEASE == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
+          CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
         run: |
           gh release upload \
             $RELEASE_TAG \
@@ -316,12 +316,12 @@ jobs:
       - name: Mark pre-release installer complete
         if: steps.check_secrets.outputs.HAS_GLUE_SECRET && env.PRE_RELEASE == 'true'
         run: |
-          curl -s -XPOST -H "Authorization: Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}" --data '{"cryptomines_ref": "$RELEASE_TAG"}' ${{ secrets.GLUE_API_URL }}/api/v1/$RFC_REPO-prerelease/$RELEASE_TAG/success/${{ matrix.os.glue-name }}
+          curl -s -XPOST -H "Authorization: Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}" --data '{"corpochain_ref": "$RELEASE_TAG"}' ${{ secrets.GLUE_API_URL }}/api/v1/$RFC_REPO-prerelease/$RELEASE_TAG/success/${{ matrix.os.glue-name }}
 
       - name: Mark release installer complete
         if: steps.check_secrets.outputs.HAS_GLUE_SECRET && env.FULL_RELEASE == 'true'
         run: |
-          curl -s -XPOST -H "Authorization: Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}" --data '{"cryptomines_ref": "$RELEASE_TAG"}' ${{ secrets.GLUE_API_URL }}/api/v1/$RFC_REPO/$RELEASE_TAG/success/${{ matrix.os.glue-name }}
+          curl -s -XPOST -H "Authorization: Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}" --data '{"corpochain_ref": "$RELEASE_TAG"}' ${{ secrets.GLUE_API_URL }}/api/v1/$RFC_REPO/$RELEASE_TAG/success/${{ matrix.os.glue-name }}
 
       # We want to delete this no matter what happened in the previous steps (failures, success, etc)
       - name: Delete signing keychain
@@ -331,4 +331,4 @@ jobs:
 
       - name: Remove working files to exclude from cache
         run: |
-          rm -rf ./cryptomines-blockchain-gui/packages/gui/daemon
+          rm -rf ./corpochain-gui/packages/gui/daemon

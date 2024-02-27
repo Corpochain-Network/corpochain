@@ -50,7 +50,7 @@ if TYPE_CHECKING:
     from chia.wallet.wallet_state_manager import WalletStateManager
 
 # https://github.com/Chia-Network/chips/blob/80e4611fe52b174bf1a0382b9dff73805b18b8c6/CHIPs/chip-0002.md#signmessage
-CHIP_0002_SIGN_MESSAGE_PREFIX = "Cryptomines Signed Message"
+CHIP_0002_SIGN_MESSAGE_PREFIX = "Corpochain Signed Message"
 
 
 class Wallet:

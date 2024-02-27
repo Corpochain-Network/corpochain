@@ -101,9 +101,9 @@ def configure(
             if testnet == "true" or testnet == "t":
                 print("Setting Testnet")
                 testnet_port = "58444"
-                testnet_introducer = "introducer-testnet10.cryptominesblockchain.pl"
-                testnet_dns_introducer = "introducer-testnet10.cryptominesblockchain.pl"
-                bootstrap_peers = ["testnet10-node.cryptominesblockchain.pl"]
+                testnet_introducer = "introducer-testnet10.corpochain.pl"
+                testnet_dns_introducer = "introducer-testnet10.corpochain.pl"
+                bootstrap_peers = ["testnet10-node.corpochain.pl"]
                 testnet = "testnet10"
                 config["full_node"]["port"] = int(testnet_port)
                 if config["full_node"]["introducer_peer"] is None:
@@ -145,9 +145,9 @@ def configure(
             elif testnet == "false" or testnet == "f":
                 print("Setting Mainnet")
                 mainnet_port = "44411"
-                mainnet_introducer = "introducer.cryptominesblockchain.pl"
-                mainnet_dns_introducer = "dns-introducer.cryptominesblockchain.pl"
-                bootstrap_peers = ["node.cryptominesblockchain.pl"]
+                mainnet_introducer = "introducer.corpochain.pl"
+                mainnet_dns_introducer = "dns-introducer.corpochain.pl"
+                bootstrap_peers = ["node.corpochain.pl"]
                 net = "mainnet"
                 config["full_node"]["port"] = int(mainnet_port)
                 config["full_node"]["introducer_peer"]["port"] = int(mainnet_port)

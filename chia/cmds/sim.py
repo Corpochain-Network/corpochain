@@ -11,7 +11,7 @@ from chia.cmds.sim_funcs import async_config_wizard, farm_blocks, print_status, 
 from chia.util.default_root import SIMULATOR_ROOT_PATH
 
 
-@click.group("sim", help="Configure and make requests to a Cryptomines Simulator Full Node")
+@click.group("sim", help="Configure and make requests to a Corpochain Simulator Full Node")
 @click.option(
     "-p",
     "--rpc-port",
@@ -40,7 +40,7 @@ def sim_cmd(ctx: click.Context, rpc_port: Optional[int], root_path: str, simulat
     ctx.obj["rpc_port"] = rpc_port
 
 
-@sim_cmd.command("create", help="Guides you through the process of setting up a Cryptomines Simulator")
+@sim_cmd.command("create", help="Guides you through the process of setting up a Corpochain Simulator")
 @options.create_fingerprint()
 @click.option(
     "-r",

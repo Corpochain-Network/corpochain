@@ -1,5 +1,5 @@
 ----------------------------
-# cryptomines-blockchain
+# corpochain
 ----------------------------
 ## How to install from source
 ### For Linux and Mac OS:
@@ -10,11 +10,11 @@
 
 2. Download repository with submodules.
 
-        git clone https://github.com/Cryptomines-Network/cryptomines-blockchain.git --recurse-submodules
+        git clone https://github.com/serwisgalena/corpochain.git --recurse-submodules
 
-3. Go to "./cryptomines-blockchain".
+3. Go to "./corpochain".
 
-        cd cryptomines-blockchain
+        cd corpochain
 
 4. Give executable permision to "./install.sh" and if you want to install GUI for this blockchain "./install-gui.sh".
 

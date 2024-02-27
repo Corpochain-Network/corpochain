@@ -3,5 +3,5 @@
 
 set -e
 
-unlink /usr/bin/cryptomines || true
-unlink /usr/bin/cryptomines-blockchain || true
+unlink /usr/bin/corpochain || true
+unlink /usr/bin/corpochain || true

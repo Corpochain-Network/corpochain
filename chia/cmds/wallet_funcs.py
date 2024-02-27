@@ -346,7 +346,7 @@ async def send(
                 return None
 
         print("Transaction not yet submitted to nodes")
-        print(f"To get status, use command: cryptomines wallet get_transaction -f {fingerprint} -tx 0x{tx_id}")
+        print(f"To get status, use command: corpochain wallet get_transaction -f {fingerprint} -tx 0x{tx_id}")
 
 
 async def get_address(wallet_rpc_port: Optional[int], fp: Optional[int], wallet_id: int, new_address: bool) -> None:
@@ -770,7 +770,7 @@ async def take_offer(
                 tx_config=CMDTXConfigLoader().to_tx_config(units["chia"], config, fingerprint),
             )
             print(f"Accepted offer with ID {trade_record.trade_id}")
-            print(f"Use cryptomines wallet get_offers --id {trade_record.trade_id} -f {fingerprint} to view its status")
+            print(f"Use corpochain wallet get_offers --id {trade_record.trade_id} -f {fingerprint} to view its status")
 
 
 async def cancel_offer(
@@ -793,7 +793,7 @@ async def cancel_offer(
         )
         print(f"Cancelled offer with ID {trade_record.trade_id}")
         if secure:
-            print(f"Use cryptomines wallet get_offers --id {trade_record.trade_id} -f {fingerprint} to view cancel status")
+            print(f"Use corpochain wallet get_offers --id {trade_record.trade_id} -f {fingerprint} to view cancel status")
 
 
 def wallet_coin_unit(typ: WalletType, address_prefix: str) -> Tuple[str, int]:  # pragma: no cover
@@ -1361,7 +1361,7 @@ async def send_notification(
         tx = await wallet_client.send_notification(address, message, amount, fee)
 
         print("Notification sent successfully.")
-        print(f"To get status, use command: cryptomines wallet get_transaction -f {fingerprint} -tx 0x{tx.name}")
+        print(f"To get status, use command: corpochain wallet get_transaction -f {fingerprint} -tx 0x{tx.name}")
 
 
 async def get_notifications(

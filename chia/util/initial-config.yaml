@@ -107,7 +107,7 @@ network_overrides: &network_overrides
       default_full_node_port: 44411
 
 selected_network: &selected_network "mainnet"
-ALERTS_URL: https://download.cryptominesblockchain.pl/notify/mainnet_alert.txt
+ALERTS_URL: https://download.corpochain.pl/notify/mainnet_alert.txt
 CHIA_ALERTS_PUBKEY: 89b7fd87cb56e926ecefb879a29aae308be01f31980569f6a75a69d2a9a69daefd71fb778d865f7c50d6c967e3025937
 
 # public ssl ca is included in source code
@@ -149,7 +149,7 @@ seeder:
   crawler_db_path: "crawler.db"
   # Peers used for the initial run.
   bootstrap_peers:
-    - "node.cryptominesblockchain.pl"
+    - "node.corpochain.pl"
   # Only consider nodes synced at least to this height.
   minimum_height: 240000
   # How many of a particular version we need to see before reporting it in the logs
@@ -416,7 +416,7 @@ full_node:
   weight_proof_timeout: &weight_proof_timeout 360
 
   # when enabled, the full node will print a pstats profile to the root_dir/profile every second
-  # analyze with cryptomines/utils/profiler.py
+  # analyze with corpochain/utils/profiler.py
   enable_profiler: False
 
   enable_memory_profiler: False
@@ -442,7 +442,7 @@ full_node:
   # List of trusted DNS seeders to bootstrap from.
   # If you modify this, please change the hardcode as well from FullNode.set_server()
   dns_servers: &dns_servers
-    - "dns-introducer.cryptominesblockchain.pl"
+    - "dns-introducer.corpochain.pl"
     - "chia.ctrlaltdel.ch"
     - "seeder.dexie.space"
     - "chia-seeder.h9.com"
@@ -455,7 +455,7 @@ full_node:
     host: *self_hostname
     port: 44413
   introducer_peer:
-    host: introducer.cryptominesblockchain.pl # Cryptomines AWS introducer IPv4/IPv6
+    host: introducer.corpochain.pl # Corpochain AWS introducer IPv4/IPv6
     port: 44412
     enable_private_networks: False
   wallet_peer:
@@ -573,7 +573,7 @@ wallet:
   recent_peer_threshold: 6000
 
   introducer_peer:
-    host: introducer.cryptominesblockchain.pl # Cryptomines AWS introducer IPv4/IPv6
+    host: introducer.corpochain.pl # Corpochain AWS introducer IPv4/IPv6
     port: 44412
     enable_private_networks: False
 
@@ -691,7 +691,7 @@ simulator:
   farming_address:
 
   # the directory used to save plots
-  # for the plot directory below the final directory will be: ~/.cryptomines/simulator/plots
+  # for the plot directory below the final directory will be: ~/.corpochain/simulator/plots
   plot_directory: simulator/plots
 
   # Should we use real time in the simulated chain?

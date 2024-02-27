@@ -27,7 +27,7 @@ dependencies = [
     "filelock==3.12.2",  # For reading and writing config multiprocess and multithread safely  (non-reentrant locks)
     "keyring==23.13.1",  # Store keys in MacOS Keychain, Windows Credential Locker
     "PyYAML==6.0.1",  # Used for config file format
-    "setproctitle==1.3.2",  # Gives the cryptomines processes readable names
+    "setproctitle==1.3.2",  # Gives the corpochain processes readable names
     "sortedcontainers==2.4.0",  # For maintaining sorted mempools
     "click==8.1.3",  # For the CLI
     "dnspython==2.4.1",  # Query DNS seeds
@@ -77,14 +77,14 @@ legacy_keyring_dependencies = [
 ]
 
 kwargs = dict(
-    name="cryptomines-blockchain",
+    name="corpochain",
     author="Kopalnie Krypto",
     author_email="kontakt@kopalniekrypto.pl",
-    description="Cryptomines blockchain full node, farmer, timelord, and wallet.",
+    description="Corpochain blockchain full node, farmer, timelord, and wallet.",
     url="https://chiablockchain.pl/",
     license="Apache License",
     python_requires=">=3.8.1, <4",
-    keywords="cryptomines blockchain node",
+    keywords="corpochain blockchain node",
     install_requires=dependencies,
     extras_require=dict(
         dev=dev_dependencies,
@@ -94,21 +94,21 @@ kwargs = dict(
     packages=find_packages(include=["build_scripts", "chia", "chia.*", "mozilla-ca"]),
     entry_points={
         "console_scripts": [
-            "cryptomines = chia.cmds.chia:main",
-            "cryptomines_daemon = chia.daemon.server:main",
-            "cryptomines_wallet = chia.server.start_wallet:main",
-            "cryptomines_full_node = chia.server.start_full_node:main",
-            "cryptomines_harvester = chia.server.start_harvester:main",
-            "cryptomines_farmer = chia.server.start_farmer:main",
-            "cryptomines_introducer = chia.server.start_introducer:main",
-            "cryptomines_crawler = chia.seeder.start_crawler:main",
-            "cryptomines_seeder = chia.seeder.dns_server:main",
-            "cryptomines_timelord = chia.server.start_timelord:main",
-            "cryptomines_timelord_launcher = chia.timelord.timelord_launcher:main",
-            "cryptomines_full_node_simulator = chia.simulator.start_simulator:main",
-            "cryptomines_data_layer = chia.server.start_data_layer:main",
-            "cryptomines_data_layer_http = chia.data_layer.data_layer_server:main",
-            "cryptomines_data_layer_s3_plugin = chia.data_layer.s3_plugin_service:run_server",
+            "corpochain = chia.cmds.chia:main",
+            "corpochain_daemon = chia.daemon.server:main",
+            "corpochain_wallet = chia.server.start_wallet:main",
+            "corpochain_full_node = chia.server.start_full_node:main",
+            "corpochain_harvester = chia.server.start_harvester:main",
+            "corpochain_farmer = chia.server.start_farmer:main",
+            "corpochain_introducer = chia.server.start_introducer:main",
+            "corpochain_crawler = chia.seeder.start_crawler:main",
+            "corpochain_seeder = chia.seeder.dns_server:main",
+            "corpochain_timelord = chia.server.start_timelord:main",
+            "corpochain_timelord_launcher = chia.timelord.timelord_launcher:main",
+            "corpochain_full_node_simulator = chia.simulator.start_simulator:main",
+            "corpochain_data_layer = chia.server.start_data_layer:main",
+            "corpochain_data_layer_http = chia.data_layer.data_layer_server:main",
+            "corpochain_data_layer_s3_plugin = chia.data_layer.s3_plugin_service:run_server",
         ]
     },
     package_data={
@@ -122,8 +122,8 @@ kwargs = dict(
     long_description_content_type="text/markdown",
     zip_safe=False,
     project_urls={
-        "Source": "https://github.com/Cryptomines-Network/cryptomines-blockchain/",
-        "Changelog": "https://github.com/Cryptomines-Network/cryptomines-blockchain/blob/main/CHANGELOG.md",
+        "Source": "https://github.com/serwisgalena/corpochain/",
+        "Changelog": "https://github.com/serwisgalena/corpochain/blob/main/CHANGELOG.md",
     },
 )
 

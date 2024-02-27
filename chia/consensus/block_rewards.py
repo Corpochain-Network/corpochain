@@ -6,7 +6,7 @@ from chia.consensus.block_record import BlockRecord
 from chia.consensus.blockchain_interface import BlockchainInterface
 from chia.consensus.constants import ConsensusConstants
 
-# 1 Cryptomines coin = 1,000,000,000,000 = 1 trillion mojo.
+# 1 Corpochain coin = 1,000,000,000,000 = 1 trillion mojo.
 _mojo_per_chia = 1000000000000
 _bpx_to_gwei = 1000000000
 _blocks_per_year = 1681920  # 32 * 6 * 24 * 365

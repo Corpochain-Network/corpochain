@@ -23,7 +23,7 @@ if ($i)
 
 if ([Environment]::Is64BitOperatingSystem -eq $false)
 {
-    Write-Output "Cryptomines requires a 64-bit Windows installation"
+    Write-Output "Corpochain requires a 64-bit Windows installation"
     Exit 1
 }
 
@@ -126,11 +126,11 @@ if ($p)
 }
 
 Write-Output ""
-Write-Output "Cryptomines blockchain .\Install.ps1 complete."
+Write-Output "Corpochain blockchain .\Install.ps1 complete."
 Write-Output ""
-Write-Output "Try the Quick Start Guide to running cryptomines-blockchain:"
-Write-Output "https://github.com/Cryptomines-Network/cryptomines-blockchain/wiki/Quick-Start-Guide"
+Write-Output "Try the Quick Start Guide to running corpochain:"
+Write-Output "https://github.com/serwisgalena/corpochain/wiki/Quick-Start-Guide"
 Write-Output ""
 Write-Output "To install the GUI run '.\venv\scripts\Activate.ps1' then '.\Install-gui.ps1'."
 Write-Output ""
-Write-Output "Type '.\venv\Scripts\Activate.ps1' and then 'cryptomines init' to begin."
+Write-Output "Type '.\venv\Scripts\Activate.ps1' and then 'corpochain init' to begin."

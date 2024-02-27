@@ -52,13 +52,13 @@ def show_cmd(
     import asyncio
 
     if connections:
-        print("'cryptomines show -c' has been renamed to 'cryptomines peer full_node -c' ")
+        print("'corpochain show -c' has been renamed to 'corpochain peer full_node -c' ")
     if add_connection != "":
-        print("'cryptomines show -a' has been renamed to 'cryptomines peer full_node -a' ")
+        print("'corpochain show -a' has been renamed to 'corpochain peer full_node -a' ")
     if remove_connection != "":
-        print("'cryptomines show -r' has been renamed to 'cryptomines peer full_node -r' ")
+        print("'corpochain show -r' has been renamed to 'corpochain peer full_node -r' ")
     if wallet_rpc_port is not None:
-        print("'cryptomines show -wp' is not used, please remove it from your command.")
+        print("'corpochain show -wp' is not used, please remove it from your command.")
     asyncio.run(
         show_async(
             rpc_port,

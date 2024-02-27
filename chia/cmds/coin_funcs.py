@@ -139,7 +139,7 @@ async def async_combine(
         if not await wallet_client.get_synced():
             print("Wallet not synced. Please wait.")
             return
-        is_xch: bool = wallet_type == WalletType.STANDARD_WALLET  # this lets us know if we are directly combining Cryptomines
+        is_xch: bool = wallet_type == WalletType.STANDARD_WALLET  # this lets us know if we are directly combining Corpochain
 
         tx_config = CMDTXConfigLoader(
             max_coin_amount=max_coin_amount,
@@ -218,7 +218,7 @@ async def async_split(
         if not await wallet_client.get_synced():
             print("Wallet not synced. Please wait.")
             return
-        is_xch: bool = wallet_type == WalletType.STANDARD_WALLET  # this lets us know if we are directly spitting Cryptomines
+        is_xch: bool = wallet_type == WalletType.STANDARD_WALLET  # this lets us know if we are directly spitting Corpochain
         final_amount_per_coin = uint64(int(amount_per_coin * mojo_per_unit))
         total_amount = final_amount_per_coin * number_of_coins
         if is_xch:

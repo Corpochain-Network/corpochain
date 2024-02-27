@@ -16,7 +16,7 @@ import click
     is_flag=True,
     help="Attempt to fix SSL certificate/key file permissions",
 )
-@click.option("--testnet", is_flag=True, help="Configure this cryptomines install to connect to the testnet")
+@click.option("--testnet", is_flag=True, help="Configure this corpochain install to connect to the testnet")
 @click.option("--set-passphrase", "-s", is_flag=True, help="Protect your keyring with a passphrase")
 @click.option(
     "--v1-db",
@@ -37,12 +37,12 @@ def init_cmd(
 
     \b
     Follow these steps to create new certificates for a remote harvester:
-    - Make a copy of your Farming Machine CA directory: ~/.cryptomines/[version]/config/ssl/ca
-    - Shut down all cryptomines daemon processes with `cryptomines stop all -d`
-    - Run `cryptomines init -c [directory]` on your remote harvester,
+    - Make a copy of your Farming Machine CA directory: ~/.corpochain/[version]/config/ssl/ca
+    - Shut down all corpochain daemon processes with `corpochain stop all -d`
+    - Run `corpochain init -c [directory]` on your remote harvester,
       where [directory] is the the copy of your Farming Machine CA directory
-    - Get more details on remote harvester on Cryptomines wiki:
-      https://github.com/Cryptomines-Network/cryptomines-blockchain/wiki/Farming-on-many-machines
+    - Get more details on remote harvester on Corpochain wiki:
+      https://github.com/serwisgalena/corpochain/wiki/Farming-on-many-machines
     """
     from pathlib import Path
 

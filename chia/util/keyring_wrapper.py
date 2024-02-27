@@ -19,8 +19,8 @@ from chia.util.file_keyring import FileKeyring
 # the new passphrase.
 DEFAULT_PASSPHRASE_IF_NO_MASTER_PASSPHRASE = "$ chia passphrase set # all the cool kids are doing it!"
 
-MASTER_PASSPHRASE_SERVICE_NAME = "Cryptomines Passphrase"
-MASTER_PASSPHRASE_USER_NAME = "Cryptomines Passphrase"
+MASTER_PASSPHRASE_SERVICE_NAME = "Corpochain Passphrase"
+MASTER_PASSPHRASE_USER_NAME = "Corpochain Passphrase"
 
 
 OSPassphraseStore = Union[MacKeyring, WinKeyring]

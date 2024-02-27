@@ -3,5 +3,5 @@
 
 set -e
 
-ln -s /opt/cryptomines/resources/app.asar.unpacked/daemon/cryptomines /usr/bin/cryptomines || true
-ln -s /opt/cryptomines/cryptomines-blockchain /usr/bin/cryptomines-blockchain || true
+ln -s /opt/corpochain/resources/app.asar.unpacked/daemon/corpochain /usr/bin/corpochain || true
+ln -s /opt/corpochain/corpochain /usr/bin/corpochain || true

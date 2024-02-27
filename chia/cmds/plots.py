@@ -18,9 +18,9 @@ def show_plots(root_path: Path) -> None:
     print("Directories where plots are being searched for:")
     print("Note that subdirectories must be added manually")
     print(
-        "Add with 'cryptomines plots add -d [dir]' and remove with"
-        + " 'cryptomines plots remove -d [dir]'"
-        + " Scan and check plots with 'cryptomines plots check'"
+        "Add with 'corpochain plots add -d [dir]' and remove with"
+        + " 'corpochain plots remove -d [dir]'"
+        + " Scan and check plots with 'corpochain plots check'"
     )
     print()
     for str_path in get_plot_directories(root_path):
@@ -35,7 +35,7 @@ def plots_cmd(ctx: click.Context) -> None:
 
     root_path: Path = ctx.obj["root_path"]
     if not root_path.is_dir():
-        raise RuntimeError("Please initialize (or migrate) your config directory with 'cryptomines init'")
+        raise RuntimeError("Please initialize (or migrate) your config directory with 'corpochain init'")
     initialize_logging("", {"log_level": "INFO", "log_stdout": True}, root_path)
 
 

@@ -19,11 +19,11 @@ if [ -z "$VIRTUAL_ENV" ]; then
 fi
 
 if [ "$(id -u)" = 0 ]; then
-  echo "The Cryptomines Blockchain GUI can not be installed or run by the root user."
+  echo "The Corpochain Blockchain GUI can not be installed or run by the root user."
   exit 1
 fi
 
-# Allows overriding the branch or commit to build in cryptomines-blockchain-gui
+# Allows overriding the branch or commit to build in corpochain-gui
 SUBMODULE_BRANCH=$1
 
 nodejs_is_installed(){
@@ -189,7 +189,7 @@ if [ ! "$CI" ]; then
   echo "Running git submodule update."
   echo ""
   git submodule update
-  cd cryptomines-blockchain-gui
+  cd corpochain-gui
 
   if [ "$SUBMODULE_BRANCH" ];
   then
@@ -208,13 +208,13 @@ if [ ! "$CI" ]; then
   npm audit fix || true
   npm run build
 
-  # Set modified output of `cryptomines version` to version property of GUI's package.json
+  # Set modified output of `corpochain version` to version property of GUI's package.json
   python ../installhelper.py
 else
   echo "Skipping node.js in install.sh on MacOS ci."
 fi
 
 echo ""
-echo "Cryptomines blockchain install-gui.sh completed."
+echo "Corpochain blockchain install-gui.sh completed."
 echo ""
 echo "Type 'bash start-gui.sh &' to start the GUI."

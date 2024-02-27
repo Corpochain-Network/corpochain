@@ -3,7 +3,7 @@
 # PULL IN LICENSES USING NPM - LICENSE CHECKER
 npm install -g license-checker
 
-cd ../cryptomines-blockchain-gui || exit 1
+cd ../corpochain-gui || exit 1
 
 npm ci
 

@@ -24,7 +24,7 @@ config/keys.yaml
 config/plots.yaml
 
 # Bundled code
-cryptomines-blockchain.tar.gz.tar.gz
+corpochain.tar.gz.tar.gz
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -50,7 +50,7 @@ activate
 .idea
 
 # Packaging
-cryptomines-blockchain.tar.gz
+corpochain.tar.gz
 
 # Timelord utilities
 vdf_bench
@@ -76,18 +76,18 @@ main.sym
 *.pstats
 
 # Dev config react
-# cryptomines-blockchain-gui/src/dev_config.js
+# corpochain-gui/src/dev_config.js
 # React built app
-cryptomines-blockchain-gui/.eslintcache
-cryptomines-blockchain-gui/build
+corpochain-gui/.eslintcache
+corpochain-gui/build
 build_scripts/dist
 build_scripts/*.Dmg
-cryptomines-blockchain-gui/src/locales/_build
+corpochain-gui/src/locales/_build
 build_scripts\win_build
 build_scripts/win_build
 win_code_sign_cert.p12
 
-# cryptomines-blockchain wheel build folder
+# corpochain wheel build folder
 build/
 
 # Temporal `n` (node version manager) directory

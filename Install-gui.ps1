@@ -3,7 +3,7 @@ $SUBMODULE_BRANCH = $args[0]
 
 if ($null -eq (Get-ChildItem env:VIRTUAL_ENV -ErrorAction SilentlyContinue))
 {
-    Write-Output "This script requires that the Cryptomines Python virtual environment is activated."
+    Write-Output "This script requires that the Corpochain Python virtual environment is activated."
     Write-Output "Execute '.\venv\Scripts\Activate.ps1' before running."
     Exit 1
 }
@@ -28,7 +28,7 @@ if ( $SUBMODULE_BRANCH ) {
 
 Push-Location
 try {
-    Set-Location cryptomines-blockchain-gui
+    Set-Location corpochain-gui
 
     $ErrorActionPreference = "SilentlyContinue"
     npm ci --loglevel=error
@@ -37,9 +37,9 @@ try {
     py ..\installhelper.py
 
     Write-Output ""
-    Write-Output "Cryptomines blockchain Install-gui.ps1 completed."
+    Write-Output "Corpochain blockchain Install-gui.ps1 completed."
     Write-Output ""
-    Write-Output "Type 'cd cryptomines-blockchain-gui' and then 'npm run electron' to start the GUI."
+    Write-Output "Type 'cd corpochain-gui' and then 'npm run electron' to start the GUI."
 } finally {
     Pop-Location
 }

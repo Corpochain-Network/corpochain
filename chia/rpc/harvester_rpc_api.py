@@ -11,7 +11,7 @@ from chia.util.ws_message import WsRpcMessage, create_payload_dict
 class HarvesterRpcApi:
     def __init__(self, harvester: Harvester):
         self.service = harvester
-        self.service_name = "cryptomines_harvester"
+        self.service_name = "corpochain_harvester"
 
     def get_routes(self) -> Dict[str, Endpoint]:
         return {

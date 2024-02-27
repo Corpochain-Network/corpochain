@@ -2,20 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.1.0] Cryptomines blockchain
+## [1.1.0] Corpochain blockchain
 
 ### Added
 - Added Ethereum connection
-- Added `cryptomines completion` command
+- Added `corpochain completion` command
 - Added wallet_removed to `state_changes` messages to support wallet removal in GUI
 - Add support to `cat_spend` RPC for running TAIL
 - Expose NFT coin info's latest_height to RPCs requesting NFT info
-- Make `python -m cryptomines` work
+- Make `python -m corpochain` work
 - DataLayer plugin support and infrastructure
 - Add WalletConnect
 - Add Bladebit v2 plotting support (RAM and Disk)
-- Add `cryptomines keys show --json` (display all keys as json)
-- Add `cryptomines data get_sync_status` CLI and RPC.
+- Add `corpochain keys show --json` (display all keys as json)
+- Add `corpochain data get_sync_status` CLI and RPC.
 - Add download progress log and stream in Datalayer
 - Add wallet RPC `/get_spendable_coins`
 - Add wallet RPC `/get_coin_records_by_names`
@@ -23,21 +23,21 @@ All notable changes to this project will be documented in this file.
 - Add wallet RPC `/did_message_spend`
 - Add wallet RPC `/did_get_info`
 - Add wallet RPC `/nft_set_did_bulk`
-- Add options `--max-coin-amount` and `--exclude-coin-ids` to `cryptomines wallet send`
-- Add `--fingerprint` option to `cryptomines keys show`
+- Add options `--max-coin-amount` and `--exclude-coin-ids` to `corpochain wallet send`
+- Add `--fingerprint` option to `corpochain keys show`
 - Add GUI support for adding and removing full node peers
 - New GUI setting for NFT image scaling
 - New GUI warning if the GUI version is different from the back-end version
 - New node RPC for fee estimates `/get_fee_estimate`
 - Added support for labeling (naming) wallets (keys)
-- Added CLI option `cryptomines keys label`
+- Added CLI option `corpochain keys label`
 - Added REMARK to `ConditionOpcodes`
 - Prevent creation of offers with 100% royalties
-- Added `cryptomines peer` command to replace `cryptomines show -c`
+- Added `corpochain peer` command to replace `corpochain show -c`
 - New wallet RPC `/nft_mint_bulk` and preliminary support for bulk minting
 - New wallet RPC `/nft_calculate_royalties`
 - New wallet signing RPCs `/sign_message_by_address`, `/sign_message_by_id`
-- New wallet CLI option `cryptomines wallet sign_message`
+- New wallet CLI option `corpochain wallet sign_message`
 - New wallet RPC `/push_transactions`
 - New daemon command `running_services` to list all running services
 - Code coverage is now generated
@@ -52,7 +52,7 @@ All notable changes to this project will be documented in this file.
   - Add Source and Changelog to project_urls
 - Add condition code constant for REMARK, an always true Chialisp condition
 - Add several wallet optimizations
-- Add `cryptomines db backup --backup-file <backup_file_destination>`
+- Add `corpochain db backup --backup-file <backup_file_destination>`
 - Add debug option to log all SQL commands for wallet db
 - Additional data for `get_wallet_balance` and `get_wallets` endpoints
 - Add `change_data` to `_state_changed` since the later calls expect it
@@ -77,13 +77,13 @@ All notable changes to this project will be documented in this file.
 - Show DID in the offer preview for NFTs
 - Added wallet RPCs (`get_derivation_index`, `update_derivation_index`) to enable the GUI, and CLI to report what the current derivation index is for scanning wallet addresses, and also allows a user to move that index forward to broaden the set of addresses to scan for coins
 - Added support for NFTs!!! :party:
-- Added `cryptomines wallet nft` command
-- Added `cryptomines wallet did` command
+- Added `corpochain wallet nft` command
+- Added `corpochain wallet did` command
 - Added RPCs for DID
 - Added RPCs for NFT
 - Enable stricter mempool rule when dealing with multiple extra arguments
 - Added a retry when loading pool info from a pool at 2 minute intervals
-- Added CLI options `--sort-by-height` and –sort-by-relevance` to `cryptomines wallet get_transactions`
+- Added CLI options `--sort-by-height` and –sort-by-relevance` to `corpochain wallet get_transactions`
 - Harvester: Introduce `recursive_plot_scan`
 - Add libgmp-dev to Bladebit installation
 - Add support for multiple of the same CAT in aggregate offers
@@ -101,13 +101,13 @@ All notable changes to this project will be documented in this file.
 - Improvements to the harvester `get_plots` RPC
 - Creating an offer now allows you to edit the exchange between two tokens that will auto calculate either the sending token amount or the receiving token amount
 - When making an offer, makers can now create an offer including a fee to help get the transaction into the mempool when an offer is accepted
-- Implemented `cryptomines rpc` command
+- Implemented `corpochain rpc` command
 - New RPC `get_coin_records_by_hint` - Get coins for a given hint
 - Add maker fee to remaining offer RPCs
 - Add healthcheck endpoint to rpc services
 - Optional wallet type parameter for `get_wallets` and `wallet show`
 - Add `select_coins` RPC method
-- Added `-n`/`--new-address` option to `cryptomines wallet get_address`
+- Added `-n`/`--new-address` option to `corpochain wallet get_address`
 - New DBWrapper supporting concurrent readers
 - Added `config.yaml` option to run the `full_node` in single-threaded mode
 - Build cli only version of debs
@@ -187,10 +187,10 @@ All notable changes to this project will be documented in this file.
 - Removed unnecessary split when starting daemon
 - Removed mostly unused wallet action store (wallet_action_store.py) and rearrange code as needed
 - Removed unused `all_puzzle_hashes` from `wallet_puzzle_store`
-- Removed "Total iterations since start" from `cryptomines show -s`
+- Removed "Total iterations since start" from `corpochain show -s`
 - Removed rate-limited wallet
 - Removed the beta program link from the warning in the CLI
-- Removed `--enable-data-server` from `cryptomines configure` CLI
+- Removed `--enable-data-server` from `corpochain configure` CLI
 - Improved RPC server start/stop
 - Drop partially implemented BIP39 passphrase support
 - Simplify key deletion in `Keychain`
@@ -200,9 +200,9 @@ All notable changes to this project will be documented in this file.
 - Dropped unused `chia_minor_release_number`
 - Just `raise`, not `raise e` when reraising
 - Optimized `simple_solution_generator()`
-- Allow developers to easily use standard Cryptomines `clvm` puzzles and libraries
+- Allow developers to easily use standard Corpochain `clvm` puzzles and libraries
 - Skipped validating `GTElement` in mempool
-- Improved logging for `cryptomines plotters version` errors
+- Improved logging for `corpochain plotters version` errors
 - Performance improvements in `subscribe_to_phs` using CoinState from chia_rs
 - Performance improvements in wallet syncing by doing bulk coin record lookups
 - Performance improvements in wallet syncing by caching the last derivation path
@@ -218,7 +218,7 @@ All notable changes to this project will be documented in this file.
 - Full_node: Set defaults in `SyncStore`
 - Various performance and code cleanup in mempool handling
 - Significant scalability improvements in NFT handling
-- Minter DID now shown in output of `cryptomines wallet nft get_info` and in GUI
+- Minter DID now shown in output of `corpochain wallet nft get_info` and in GUI
 - Treehash optimization for DID wallet
 - Performance improvements by using `get_puzzle_and_solution_for_coin()` from `chia_rs`
 - Adds handling for daemon not sending `initial_target_state`
@@ -229,7 +229,7 @@ All notable changes to this project will be documented in this file.
 - Recompress CLVM generators
 - Removed unnecessary logging during plot creation
 - Made `IP` section in connections table 1 character wider to handle IPV6
-- Deprecated `cryptomines plotters install` command
+- Deprecated `corpochain plotters install` command
 - Improved handling of unfinished block messages
 - Stripped leading and trailing whitespace before `bech32` decoding in various places
 - Fixed issues in the GUI with sending CAT transactions with a fee
@@ -253,15 +253,15 @@ All notable changes to this project will be documented in this file.
 - Execute SQL updates as chunks in `_set_spent function` for `tx_removals`
 - Optimized column selection in various tables to use specific columns rather than all columns
 - Write blockchain DB full node startup progress to debug.log
-- Clean up and Refactor `cryptomines show` command
+- Clean up and Refactor `corpochain show` command
 - Increment the dirty counter when setting `height-to-hash` map entries
 - `plotting.cache.DiskCache` -> `util.misc.VersionedBlob`
-- Improve `cryptomines farm summary`
+- Improve `corpochain farm summary`
 - Optimize `std_hash` in `coin.py`
 - Improved many tests
 - Remove `big_ints` list
 - Improved UX for `plotnft claim`
-- Upgrade `cryptomines-rs` to streamable support
+- Upgrade `corpochain-rs` to streamable support
 - Allow switching keys during sync
 - Optimize `get_hash` by not double converting
 - Don't re-hash the same objects
@@ -270,7 +270,7 @@ All notable changes to this project will be documented in this file.
 - Make `Plot{Info|Path}RequestData` streamable + use `from_json_dict`
 - Optimize request additions
 - Stop and join watchdog observer
-- Remove cryptomines.util.path.mkdir()
+- Remove corpochain.util.path.mkdir()
 - Remove the constants_json field
 - Don't convert `ConsensusConstants` to/from JSON
 - Move some class methods out of `Streamable`
@@ -324,7 +324,7 @@ All notable changes to this project will be documented in this file.
 - Optimize get_coins_to_check()
 - Minor wallet optimizations when determining coin type
 - Avoid redundant printing of puzzle program in NFT uncurry attempt
-- Substantially reduced overall size of Cryptomines packages
+- Substantially reduced overall size of Corpochain packages
 - Log the plot refresh parameter on start
 - Log blockchain database file used along with schema version on startup
 - Removed redundant request for SubEpochData
@@ -333,9 +333,9 @@ All notable changes to this project will be documented in this file.
 - Increased the priority of wallet transactions vs full node broadcasted transactions, so we don't have to wait in line as a wallet user
 - Deprecated the `-st, --series-total` and `-sn, --series-number` RPC and CLI NFT minting options in favor of `-ec, --edition-count` and `-en, --edition-number` to align with NFT industry terms
 - When creating a DID profile, a DID-linked NFT wallet is automatically created
-- Update `cryptomines wallet take_offer` to show NFT royalties that will be paid out when an offer is taken
+- Update `corpochain wallet take_offer` to show NFT royalties that will be paid out when an offer is taken
 - Added a parameter to indicate how many additional puzzle hashes `create_more_puzzle_hashes` should create
-- New coin selection algorithm based on bitcoin knapsack. Previously cryptomines selected the largest coin
+- New coin selection algorithm based on bitcoin knapsack. Previously corpochain selected the largest coin
 - Updated chiapos to 1.0.10
 - Updated chiavdf to 1.0.6
 - Updated blspy to 1.0.13
@@ -430,7 +430,7 @@ All notable changes to this project will be documented in this file.
 - Upped the number of file handles for madmax
 - Catch exceptions raised when resolving plot directories
 - Call close callback for already closed connections
-- Set GUI binary name to `cryptomines-blockchain` in the Fedora rpm and Ubuntu deb
+- Set GUI binary name to `corpochain` in the Fedora rpm and Ubuntu deb
 - Add simple fix to set farmer response timer for `SP: 0`
 - Preserve correct `MempoolItem` block height when rebuilding mempool
 - Windows: start daemon without a window and detached from current console
@@ -447,7 +447,7 @@ All notable changes to this project will be documented in this file.
 - Fixed issue with switching between farmer and wallet modes
 - Improve error message when sending more mojos than Spendable Balance
 - Fixed a few instances of coin name logging
-- Fixed cryptomines farm summary if using a remote full node
+- Fixed corpochain farm summary if using a remote full node
 - Fixed comments in initial config where puzzle hash should be receive address
 - Fixed locking of main thread in `validate_weight_proof_inner`
 - Fixed several bugs with untrusted sync, and correct sync status
@@ -463,12 +463,12 @@ All notable changes to this project will be documented in this file.
 - Fixed memos & minter DID
 - Fixed logo URL in readme.md
 - Fixed typo in wallet code `puzlle` -> `puzzle`
-- Fixed `cryptomines show -s` with other options as well
+- Fixed `corpochain show -s` with other options as well
 - Fixed issue with the wallet not syncing in untrusted mode, if connected to a trusted peer that is not synced
 - Improve handling of not synced peers
 - Sped up creation of puzzle hashes in the wallet
 - Replaced several handled tracebacks with standard log messages
-- Show Usage when running `cryptomines plotters`
+- Show Usage when running `corpochain plotters`
 - Fixed marking the successfully added spend bundles to the reinitialized mempool when a new peak is available
 - Fixed errors output when stopping the daemon on CLI
 - Fixed incompatibility with Python 3.10.8 around accessing the `_waiters` private attribute of asyncio Semaphore class
@@ -507,12 +507,12 @@ All notable changes to this project will be documented in this file.
 - Fix NFT wallet naming issue
 - Can't shadow `info` which is `NFTInfo` in the first place
 - Initialize logging before Service instantiation
-- Make sure cryptomines commands output help when no args are given
+- Make sure corpochain commands output help when no args are given
 - Fixed bugs in fork point calculation, and reduced number of times weight-proofs are validated
 - Fixed bug in starting the crawler (set service name to `full_node`)
 - NFT transfer/minting commands now validate the specified addresses
 - Block summaries of CAT1 offers in the RPC and CLI
-- Fixed [CVE-2022-36447] where in tokens previously minted on the Cryptomines blockchain using the `CAT1` standard can be inflated in arbitrary amounts by any holder of the token. Total amount of the token can be increased as high as the malicious actor pleases. This is true for every `CAT1` on the Cryptomines blockchain, regardless of issuance rules. This attack is auditable on-chain, so maliciously altered coins can potentially be "marked" by off-chain observers as malicious.
+- Fixed [CVE-2022-36447] where in tokens previously minted on the Corpochain blockchain using the `CAT1` standard can be inflated in arbitrary amounts by any holder of the token. Total amount of the token can be increased as high as the malicious actor pleases. This is true for every `CAT1` on the Corpochain blockchain, regardless of issuance rules. This attack is auditable on-chain, so maliciously altered coins can potentially be "marked" by off-chain observers as malicious.
 - Fixed issue that prevented websockets from being attempted if an earlier websocket failed
 - Fixed issue where `test_smallest_coin_over_amount` did not work properly when all coins were smaller than the amount
 - Fixed a performance issue with knapsack that caused it to keep searching for more coins than could actually be selected. Performance with 200k coins:
@@ -547,20 +547,20 @@ All notable changes to this project will be documented in this file.
 - Fixed wallet creation in edge cases around chain reorgs
 - Harvester: Reuse legacy refresh interval if new params aren't available
 - Fixed typos `lastest` > `latest`
-- Fixed typo in command line argument parsing for `cryptomines db validate`
+- Fixed typo in command line argument parsing for `corpochain db validate`
 - Improved backwards compatibility for node RPC calls `get_blockchain_state` and `get_additions_and_removals`
-- Fixed issue where `--root_path` option was not honored by `cryptomines configure` CLI command
+- Fixed issue where `--root_path` option was not honored by `corpochain configure` CLI command
 - Fixed cases where node DB was not created initially using v2 format
-- Improved error messages from `cryptomines db upgrade`
-- Capitalized display of `Rpc` -> `RPC` in `cryptomines show -s` 
+- Improved error messages from `corpochain db upgrade`
+- Capitalized display of `Rpc` -> `RPC` in `corpochain show -s` 
 - Improved handling of chain reorgs with atomic rollback for the wallet
 - Handled cases where one node doesn't have the coin we are looking for
 - Fixed timelord installation for Debian
 - Checked for requesting items when creating an offer
-- Minor output formatting/enhancements for `cryptomines wallet show`
+- Minor output formatting/enhancements for `corpochain wallet show`
 - Fixed typo and index issues in wallet database
 - Used the rust clvm version instead of python in more places
-- Fixed trailing bytes shown in CAT asset ID row when using `cryptomines wallet show`
+- Fixed trailing bytes shown in CAT asset ID row when using `corpochain wallet show`
 - Maintain all chain state during reorg until the new fork has been fully validated
 - Improved performance of `get_coin_records_by_names` by using proper index
 - Improved handling of unknown pending balances
@@ -570,11 +570,11 @@ All notable changes to this project will be documented in this file.
 - Some debugging information remained in `install.sh`
 - Fixed OpenSSL vulnerability CVE-2022-0778
 - Improved config.yaml update concurrency to prevent some cases of the wrong pool being used for a PlotNFT.
-- Fixed `cryptomines keys show` displaying non-observer-derived wallet address.
+- Fixed `corpochain keys show` displaying non-observer-derived wallet address.
 - Fixed `plotnft claim` returning an error.
 - Fixed invalid DB commit that prevented rollback of coin store changes.
 - Fixed locking issue with `PlotManager.plots` that caused high lookup times on plots.
-- Fixed exception when `cryptomines keys migrate` is run without needing migration.
+- Fixed exception when `corpochain keys migrate` is run without needing migration.
 - Fixed farmer rewards dialog (GUI).
 - Fixed display of pool payout address (GUI).
 - Fixed display of harvesters status when harvesters are restarted (GUI).
@@ -582,7 +582,7 @@ All notable changes to this project will be documented in this file.
 - Fixed spelling of "genrated"
 - Fixed typo "log_maxbytessrotation" in initial-config
 
-## [1.0.0] Cryptomines blockchain
+## [1.0.0] Corpochain blockchain
 
-- This is the first release of the Cryptomines testnet! Blockchain consensus, proof of time, and proof of space are included.
-- Cryptomines is a cryptocurrency and blockchain project created from Chia Blockchain, more about Chia at [https://docs.chia.net/introduction]
+- This is the first release of the Corpochain testnet! Blockchain consensus, proof of time, and proof of space are included.
+- Corpochain is a cryptocurrency and blockchain project created from Chia Blockchain, more about Chia at [https://docs.chia.net/introduction]

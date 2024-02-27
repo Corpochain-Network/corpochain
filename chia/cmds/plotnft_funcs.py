@@ -113,7 +113,7 @@ async def create(
                         return None
             except Exception as e:
                 print(
-                    f"Error creating plot NFT: {e}\n    Please start both farmer and wallet with:  cryptomines start -r farmer"
+                    f"Error creating plot NFT: {e}\n    Please start both farmer and wallet with:  corpochain start -r farmer"
                 )
             return
         print("Aborting.")

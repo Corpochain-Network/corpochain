@@ -56,13 +56,13 @@ try:
     from aiohttp import WSMsgType, web
     from aiohttp.web_ws import WebSocketResponse
 except ModuleNotFoundError:
-    print("Error: Make sure to run . ./activate from the project folder before starting Cryptomines.")
+    print("Error: Make sure to run . ./activate from the project folder before starting Corpochain.")
     quit()
 
 
 log = logging.getLogger(__name__)
 
-service_plotter = "cryptomines_plotter"
+service_plotter = "corpochain_plotter"
 
 
 class PlotState(str, Enum):
@@ -80,19 +80,19 @@ class PlotEvent(str, Enum):
 # determine if application is a script file or frozen exe
 if getattr(sys, "frozen", False):
     name_map = {
-        "cryptomines": "cryptomines",
-        "cryptomines_data_layer": "start_data_layer",
-        "cryptomines_data_layer_http": "start_data_layer_http",
-        "cryptomines_wallet": "start_wallet",
-        "cryptomines_full_node": "start_full_node",
-        "cryptomines_harvester": "start_harvester",
-        "cryptomines_farmer": "start_farmer",
-        "cryptomines_introducer": "start_introducer",
-        "cryptomines_timelord": "start_timelord",
-        "cryptomines_timelord_launcher": "timelord_launcher",
-        "cryptomines_full_node_simulator": "start_simulator",
-        "cryptomines_seeder": "start_seeder",
-        "cryptomines_crawler": "start_crawler",
+        "corpochain": "corpochain",
+        "corpochain_data_layer": "start_data_layer",
+        "corpochain_data_layer_http": "start_data_layer_http",
+        "corpochain_wallet": "start_wallet",
+        "corpochain_full_node": "start_full_node",
+        "corpochain_harvester": "start_harvester",
+        "corpochain_farmer": "start_farmer",
+        "corpochain_introducer": "start_introducer",
+        "corpochain_timelord": "start_timelord",
+        "corpochain_timelord_launcher": "timelord_launcher",
+        "corpochain_full_node_simulator": "start_simulator",
+        "corpochain_seeder": "start_seeder",
+        "corpochain_crawler": "start_crawler",
     }
 
     def executable_for_service(service_name: str) -> str:
@@ -188,7 +188,7 @@ class WebSocketServer:
             self.log.warning(
                 (
                     "Deprecation Warning: Your version of SSL (%s) does not support TLS1.3. "
-                    "A future version of Cryptomines will require TLS1.3."
+                    "A future version of Corpochain will require TLS1.3."
                 ),
                 ssl.OPENSSL_VERSION,
             )
@@ -960,11 +960,11 @@ class WebSocketServer:
 
     def _build_plotting_command_args(self, request: Any, ignoreCount: bool, index: int) -> List[str]:
         plotter: str = request.get("plotter", "chiapos")
-        command_args: List[str] = ["cryptomines", "plotters", plotter]
+        command_args: List[str] = ["corpochain", "plotters", plotter]
 
         if plotter == "bladebit":
             # plotter command must be either
-            # 'cryptomines plotters bladebit ramplot' or 'cryptomines plotters bladebit diskplot'
+            # 'corpochain plotters bladebit ramplot' or 'corpochain plotters bladebit diskplot'
             plot_type = request["plot_type"]
             assert plot_type == "diskplot" or plot_type == "ramplot" or plot_type == "cudaplot"
             command_args.append(plot_type)
@@ -1279,7 +1279,7 @@ class WebSocketServer:
         if self.webserver is not None:
             self.webserver.close()
             await self.webserver.await_closed()
-        log.info("cryptomines daemon exiting")
+        log.info("corpochain daemon exiting")
 
     async def register_service(self, websocket: WebSocketResponse, request: Dict[str, Any]) -> Dict[str, Any]:
         self.log.info(f"Register service {request}")
@@ -1487,7 +1487,7 @@ async def async_run_daemon(root_path: Path, wait_for_unlock: bool = False) -> in
     # since it might be necessary to wait for the GUI to unlock the keyring first.
     chia_init(root_path, should_check_keys=(not wait_for_unlock))
     config = load_config(root_path, "config.yaml")
-    setproctitle("cryptomines_daemon")
+    setproctitle("corpochain_daemon")
     initialize_service_logging("daemon", config)
     crt_path = root_path / config["daemon_ssl"]["private_crt"]
     key_path = root_path / config["daemon_ssl"]["private_key"]
@@ -1507,7 +1507,7 @@ async def async_run_daemon(root_path: Path, wait_for_unlock: bool = False) -> in
     sys.stdout.flush()
     try:
         with Lockfile.create(daemon_launch_lock_path(root_path), timeout=1):
-            log.info(f"cryptomines-blockchain version: {chia_full_version_str()}")
+            log.info(f"corpochain version: {chia_full_version_str()}")
 
             beta_metrics: Optional[BetaMetricsLogger] = None
             if config.get("beta", {}).get("enabled", False):

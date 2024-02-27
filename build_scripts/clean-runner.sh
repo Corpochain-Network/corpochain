@@ -7,15 +7,15 @@ PWD=$(pwd)
 
 rm -rf ../venv || true
 rm -rf venv || true
-rm -rf cryptomines_blockchain.egg-info || true
+rm -rf corpochain_blockchain.egg-info || true
 rm -rf build_scripts/final_installer || true
 rm -rf build_scripts/dist || true
 rm -rf build_scripts/pyinstaller || true
-rm -rf cryptomines-blockchain-gui/build || true
-rm -rf cryptomines-blockchain-gui/daemon || true
-rm -rf cryptomines-blockchain-gui/node_modules || true
-rm cryptomines-blockchain-gui/temp.json || true
-( cd "$PWD/cryptomines-blockchain-gui" && git checkout HEAD -- package-lock.json ) || true
+rm -rf corpochain-gui/build || true
+rm -rf corpochain-gui/daemon || true
+rm -rf corpochain-gui/node_modules || true
+rm corpochain-gui/temp.json || true
+( cd "$PWD/corpochain-gui" && git checkout HEAD -- package-lock.json ) || true
 cd "$PWD" || true
 
 # Clean up old globally installed node_modules that might conflict with the current build

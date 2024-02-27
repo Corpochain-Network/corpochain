@@ -78,7 +78,7 @@ async def get_average_block_time(
 class FullNodeRpcApi:
     def __init__(self, service: FullNode) -> None:
         self.service = service
-        self.service_name = "cryptomines_full_node"
+        self.service_name = "corpochain_full_node"
         self.cached_blockchain_state: Optional[Dict[str, Any]] = None
 
     def get_routes(self) -> Dict[str, Endpoint]:

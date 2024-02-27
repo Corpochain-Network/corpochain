@@ -90,7 +90,7 @@ jobs:
         python3 -m venv ../venv
         . ../venv/bin/activate
         pip3 install setuptools_scm
-        echo "CRYPTOMINES_INSTALLER_VERSION=$(python3 ./build_scripts/installer-version.py)" >> "$GITHUB_OUTPUT"
+        echo "CORPOCHAIN_INSTALLER_VERSION=$(python3 ./build_scripts/installer-version.py)" >> "$GITHUB_OUTPUT"
         deactivate
 
     - name: Test for secrets access
@@ -166,18 +166,18 @@ jobs:
     - name: Prepare GUI cache
       id: gui-ref
       run: |
-        gui_ref=$(git submodule status cryptomines-blockchain-gui | sed -e 's/^ //g' -e 's/ cryptomines-blockchain-gui.*$//g')
+        gui_ref=$(git submodule status corpochain-gui | sed -e 's/^ //g' -e 's/ corpochain-gui.*$//g')
         echo "${gui_ref}"
         echo "GUI_REF=${gui_ref}" >> "$GITHUB_OUTPUT"
-        echo "rm -rf ./cryptomines-blockchain-gui"
-        rm -rf ./cryptomines-blockchain-gui
+        echo "rm -rf ./corpochain-gui"
+        rm -rf ./corpochain-gui
 
     - name: Cache GUI
       uses: actions/cache@v3
       id: cache-gui
       with:
-        path: ./cryptomines-blockchain-gui
-        key: ${{ runner.os }}-arm64-cryptomines-blockchain-gui-${{ steps.gui-ref.outputs.GUI_REF }}
+        path: ./corpochain-gui
+        key: ${{ runner.os }}-arm64-corpochain-gui-${{ steps.gui-ref.outputs.GUI_REF }}
 
     - if: steps.cache-gui.outputs.cache-hit != 'true'
       name: Build GUI
@@ -188,7 +188,7 @@ jobs:
 
     - name: Build arm64 .deb package
       env:
-        CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
+        CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
       run: |
         ldd --version
         cd ./build_scripts
@@ -197,7 +197,7 @@ jobs:
     - name: Upload Linux artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: cryptomines-installers-linux-deb-arm64
+        name: corpochain-installers-linux-deb-arm64
         path: ${{ github.workspace }}/build_scripts/final_installer/
 
     - name: Configure AWS credentials
@@ -210,76 +210,76 @@ jobs:
     - name: Upload to s3
       if: steps.check_secrets.outputs.HAS_AWS_SECRET
       env:
-        CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
+        CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
       run: |
         GIT_SHORT_HASH=$(echo "${GITHUB_SHA}" | cut -c1-8)
-        CHIA_DEV_BUILD=${CRYPTOMINES_INSTALLER_VERSION}-$GIT_SHORT_HASH
+        CHIA_DEV_BUILD=${CORPOCHAIN_INSTALLER_VERSION}-$GIT_SHORT_HASH
         echo "CHIA_DEV_BUILD=$CHIA_DEV_BUILD" >> "$GITHUB_ENV"
-        aws s3 cp "$GITHUB_WORKSPACE/build_scripts/final_installer/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb" "s3://download.chia.net/dev/cryptomines-blockchain_${CHIA_DEV_BUILD}_arm64.deb"
-        aws s3 cp "$GITHUB_WORKSPACE/build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_arm64.deb" "s3://download.chia.net/dev/cryptomines-blockchain-cli_${CHIA_DEV_BUILD}-1_arm64.deb"
+        aws s3 cp "$GITHUB_WORKSPACE/build_scripts/final_installer/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb" "s3://download.chia.net/dev/corpochain_${CHIA_DEV_BUILD}_arm64.deb"
+        aws s3 cp "$GITHUB_WORKSPACE/build_scripts/final_installer/corpochain-cli_${CORPOCHAIN_INSTALLER_VERSION}-1_arm64.deb" "s3://download.chia.net/dev/corpochain-cli_${CHIA_DEV_BUILD}-1_arm64.deb"
 
     - name: Create Checksums
       if: env.FULL_RELEASE == 'true' || github.ref == 'refs/heads/main'
       env:
-        CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
+        CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
       run: |
         ls "$GITHUB_WORKSPACE"/build_scripts/final_installer/
-        sha256sum "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb > "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb.sha256
-        sha256sum "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_arm64.deb > "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_arm64.deb.sha256
+        sha256sum "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb > "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb.sha256
+        sha256sum "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain-cli_${CORPOCHAIN_INSTALLER_VERSION}-1_arm64.deb > "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain-cli_${CORPOCHAIN_INSTALLER_VERSION}-1_arm64.deb.sha256
         ls "$GITHUB_WORKSPACE"/build_scripts/final_installer/
 
     - name: Create torrent
       if: env.FULL_RELEASE == 'true'
       env:
-        CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
+        CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        py3createtorrent -f -t udp://tracker.opentrackr.org:1337/announce "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb -o "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb.torrent --webseed https://download.chia.net/install/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb
-        py3createtorrent -f -t udp://tracker.opentrackr.org:1337/announce "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_arm64.deb -o "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_arm64.deb.torrent --webseed https://download.chia.net/install/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_arm64.deb
-        gh release upload $RELEASE_TAG "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb.torrent
+        py3createtorrent -f -t udp://tracker.opentrackr.org:1337/announce "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb -o "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb.torrent --webseed https://download.chia.net/install/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb
+        py3createtorrent -f -t udp://tracker.opentrackr.org:1337/announce "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain-cli_${CORPOCHAIN_INSTALLER_VERSION}-1_arm64.deb -o "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain-cli_${CORPOCHAIN_INSTALLER_VERSION}-1_arm64.deb.torrent --webseed https://download.chia.net/install/corpochain-cli_${CORPOCHAIN_INSTALLER_VERSION}-1_arm64.deb
+        gh release upload $RELEASE_TAG "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb.torrent
 
     - name: Upload Dev Installer
       if: steps.check_secrets.outputs.HAS_AWS_SECRET && github.ref == 'refs/heads/main'
       env:
-        CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
+        CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
       run: |
-        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb s3://download.chia.net/latest-dev/cryptomines-blockchain_arm64_latest_dev.deb
-        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb.sha256 s3://download.chia.net/latest-dev/cryptomines-blockchain_arm64_latest_dev.deb.sha256
-        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_arm64.deb s3://download.chia.net/latest-dev/cryptomines-blockchain-cli_arm64_latest_dev.deb
-        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_arm64.deb.sha256 s3://download.chia.net/latest-dev/cryptomines-blockchain-cli_arm64_latest_dev.deb.sha256
+        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb s3://download.chia.net/latest-dev/corpochain_arm64_latest_dev.deb
+        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb.sha256 s3://download.chia.net/latest-dev/corpochain_arm64_latest_dev.deb.sha256
+        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain-cli_${CORPOCHAIN_INSTALLER_VERSION}-1_arm64.deb s3://download.chia.net/latest-dev/corpochain-cli_arm64_latest_dev.deb
+        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain-cli_${CORPOCHAIN_INSTALLER_VERSION}-1_arm64.deb.sha256 s3://download.chia.net/latest-dev/corpochain-cli_arm64_latest_dev.deb.sha256
 
     - name: Upload Release Files
       if: steps.check_secrets.outputs.HAS_AWS_SECRET && env.FULL_RELEASE == 'true'
       env:
-        CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
+        CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
       run: |
-        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb s3://download.chia.net/install/
-        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb.sha256 s3://download.chia.net/install/
-        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb.torrent s3://download.chia.net/torrents/
-        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_arm64.deb s3://download.chia.net/install/
-        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_arm64.deb.sha256 s3://download.chia.net/install/
-        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_arm64.deb.torrent s3://download.chia.net/torrents/
+        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb s3://download.chia.net/install/
+        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb.sha256 s3://download.chia.net/install/
+        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb.torrent s3://download.chia.net/torrents/
+        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain-cli_${CORPOCHAIN_INSTALLER_VERSION}-1_arm64.deb s3://download.chia.net/install/
+        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain-cli_${CORPOCHAIN_INSTALLER_VERSION}-1_arm64.deb.sha256 s3://download.chia.net/install/
+        aws s3 cp "$GITHUB_WORKSPACE"/build_scripts/final_installer/corpochain-cli_${CORPOCHAIN_INSTALLER_VERSION}-1_arm64.deb.torrent s3://download.chia.net/torrents/
 
     - name: Upload release artifacts
       if: env.RELEASE == 'true'
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
+        CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
       run: |
         gh release upload \
           $RELEASE_TAG \
-          build_scripts/final_installer/cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_arm64.deb \
-          build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_arm64.deb
+          build_scripts/final_installer/corpochain_${CORPOCHAIN_INSTALLER_VERSION}_arm64.deb \
+          build_scripts/final_installer/corpochain-cli_${CORPOCHAIN_INSTALLER_VERSION}-1_arm64.deb
 
     - name: Mark pre-release installer complete
       if: steps.check_secrets.outputs.HAS_GLUE_SECRET && env.PRE_RELEASE == 'true'
       run: |
-        curl -s -XPOST -H "Authorization: Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}" --data '{"cryptomines_ref": "$RELEASE_TAG"}' ${{ secrets.GLUE_API_URL }}/api/v1/$RFC_REPO-prerelease/$RELEASE_TAG/success/build-arm
+        curl -s -XPOST -H "Authorization: Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}" --data '{"corpochain_ref": "$RELEASE_TAG"}' ${{ secrets.GLUE_API_URL }}/api/v1/$RFC_REPO-prerelease/$RELEASE_TAG/success/build-arm
 
     - name: Mark release installer complete
       if: steps.check_secrets.outputs.HAS_GLUE_SECRET && env.FULL_RELEASE == 'true'
       run: |
-        curl -s -XPOST -H "Authorization: Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}" --data '{"cryptomines_ref": "$RELEASE_TAG"}' ${{ secrets.GLUE_API_URL }}/api/v1/$RFC_REPO/$RELEASE_TAG/success/build-arm
+        curl -s -XPOST -H "Authorization: Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}" --data '{"corpochain_ref": "$RELEASE_TAG"}' ${{ secrets.GLUE_API_URL }}/api/v1/$RFC_REPO/$RELEASE_TAG/success/build-arm
 
     - name: Clean up on self hosted runner
       run: |
@@ -287,4 +287,4 @@ jobs:
 
     - name: Remove working files to exclude from cache
       run: |
-        rm -rf ./cryptomines-blockchain-gui/packages/gui/daemon
+        rm -rf ./corpochain-gui/packages/gui/daemon

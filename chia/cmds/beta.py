@@ -142,7 +142,7 @@ def prepare_submission_cmd(ctx: click.Context) -> None:
     except IndexError:
         raise click.ClickException(f"Invalid choice: {user_input}")
     plotting_path = Path(prepare_result / "plotting")
-    chia_blockchain_path = Path(prepare_result / "cryptomines-blockchain")
+    chia_blockchain_path = Path(prepare_result / "corpochain")
     chia_logs = prepare_logs(plotting_path, prepare_chia_blockchain_log)
     plotting_logs = prepare_logs(chia_blockchain_path, prepare_plotting_log)
 

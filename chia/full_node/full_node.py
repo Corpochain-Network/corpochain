@@ -336,7 +336,7 @@ class FullNode:
                                 self.db_wrapper.db_version = 2
                                 self.log.info("blockchain database is empty, configuring as v2")
                         except sqlite3.OperationalError:
-                            # it could be a database created with "cryptomines init", which is
+                            # it could be a database created with "corpochain init", which is
                             # empty except it has the database_version table
                             pass
 
@@ -474,7 +474,7 @@ class FullNode:
             dns_servers = self.config["dns_servers"]
         elif network_name == "mainnet":
             # If `dns_servers` is missing from the `config`, hardcode it if we're running mainnet.
-            dns_servers.append("dns-introducer.cryptominesblockchain.pl")
+            dns_servers.append("dns-introducer.corpochain.pl")
         try:
             self.full_node_peers = FullNodePeers(
                 self.server,

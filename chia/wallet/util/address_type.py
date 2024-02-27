@@ -10,7 +10,7 @@ from chia.util.config import selected_network_address_prefix
 class AddressType(Enum):
     KOP = "kop"
     NFT = "nft"
-    DID = "did:cryptomines:"
+    DID = "did:corpochain:"
 
     def hrp(self, config: Dict[str, Any]) -> str:
         if self == AddressType.KOP:

@@ -50,6 +50,7 @@ async def validate_block_body(
     get_block_generator: Callable[[BlockInfo], Awaitable[Optional[BlockGenerator]]],
     *,
     validate_signature: bool = True,
+    low_buffer: bool = False,
 ) -> Tuple[Optional[Err], Optional[NPCResult]]:
     """
     This assumes the header block has been completely validated.
@@ -64,17 +65,29 @@ async def validate_block_body(
     prev_transaction_block_height: uint32 = uint32(0)
     prev_transaction_block_timestamp: uint64 = uint64(0)
 
-    if block.execution_payload is not None:
-        status = await execution_client.new_payload(block.execution_payload)
-
-        if status == "INVALID":
-            return Err.EXECUTION_INVALID_PAYLOAD, None
-        elif status == "SYNCING":
-            return Err.EXECUTION_SYNCING, None
-        elif status == "ACCEPTED":
-            log.warning(f"Execution chain reorg at height {block.height}!")
+    status = await execution_client.new_payload(block.execution_payload)
+    if status == "INVALID" or status == "INVALID_BLOCK_HASH":
+        return Err.PAYLOAD_INVALIDATED
+    elif status == "SYNCING" or status == "ACCEPTED":
+        if isinstance(block, UnfinishedBlock):
+            return Err.PAYLOAD_NOT_VALIDATED
+        if low_buffer and status == "ACCEPTED":
+            return Err.PAYLOAD_SIDECHAIN
+    elif status != "VALID":
+        return Err.UNKNOWN
+    
+    if not low_buffer and isinstance(block, FullBlock):
+        assert block_record is not None
+        optimistic_import = execution_client.beacon.config.get("optimistic_import", True)
+        
+        status = await execution_client.forkchoice_update(block_record)
+        if status == "INVALID" or status == "INVALID_BLOCK_HASH":
+            return Err.PAYLOAD_INVALIDATED
+        elif status == "SYNCING" or status == "ACCEPTED":
+            if not optimistic_import:
+                return Err.PAYLOAD_NOT_VALIDATED
         elif status != "VALID":
-            return Err.UNKNOWN, None
+            return Err.UNKNOWN
 
     # We repeat the ProofOfSpace check from block header validation here, because we want to fetch blocks
     # from the database too (BlockStore). In `BlockHeaderValidation` we don't have access to the database,

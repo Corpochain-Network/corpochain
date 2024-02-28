@@ -88,6 +88,7 @@ network_overrides: &network_overrides
     mainnet:
       address_prefix: "kop"
       default_full_node_port: 44411
+      jwt_secret: ../execution/geth/jwtsecret
     testnet0:
       address_prefix: "tkop"
       default_full_node_port: 44411
@@ -461,9 +462,6 @@ full_node:
   wallet_peer:
     host: *self_hostname
     port: 44416
-  execution_client:
-    host: *self_hostname
-    port: 4451
   logging: *logging
   network_overrides: *network_overrides
   selected_network: *selected_network
@@ -480,6 +478,8 @@ full_node:
   use_chia_loop_policy: True
 
   coinbase: "0x0000000000000000000000000000000000000000"
+  execution_endpoint: http://127.0.0.1:4451
+  optimistic_import: True
 
 ui:
   # The ui node server (if run) will run on this port

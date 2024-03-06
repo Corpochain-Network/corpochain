@@ -176,7 +176,7 @@ class CRCAT:
         optional_lineage_proof: Optional[LineageProof] = None,
     ) -> Tuple[Program, CoinSpend, CRCAT]:
         """
-        Launch a new CR-CAT from KOP.
+        Launch a new CR-CAT from CCH.
 
         Returns a delegated puzzle to run that creates the eve CAT, an eve coin spend of the CAT, and the expected class
         representation after all relevant coin spends have been confirmed on chain.

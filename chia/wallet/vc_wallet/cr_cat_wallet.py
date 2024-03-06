@@ -423,7 +423,7 @@ class CRCATWallet(CATWallet):
         selected_cat_amount = sum([c.amount for c in cat_coins])
         assert selected_cat_amount >= starting_amount
 
-        # Figure out if we need to absorb/melt some KOP as part of this
+        # Figure out if we need to absorb/melt some CCH as part of this
         regular_chia_to_claim: int = 0
         if payment_amount > starting_amount:
             # TODO: The no coverage comment is because minting is broken for both this and the standard CAT wallet
@@ -709,7 +709,7 @@ class CRCATWallet(CATWallet):
                 uint128(min_amount_to_claim),
             )
 
-        # Select the relevant KOP coins
+        # Select the relevant CCH coins
         if fee > 0:
             chia_coins = await self.standard_wallet.select_coins(
                 fee,

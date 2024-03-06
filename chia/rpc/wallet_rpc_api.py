@@ -1977,7 +1977,7 @@ class WalletRpcApi:
                 AddressType.DID.hrp(self.service.config),
             ),
             "latest_coin": coin_state.coin.name().hex(),
-            "p2_address": encode_puzzle_hash(p2_puzzle.get_tree_hash(), AddressType.KOP.hrp(self.service.config)),
+            "p2_address": encode_puzzle_hash(p2_puzzle.get_tree_hash(), AddressType.CCH.hrp(self.service.config)),
             "public_key": public_key.atom.hex(),
             "recovery_list_hash": recovery_list_hash.atom.hex(),
             "num_verification": num_verification.as_int(),

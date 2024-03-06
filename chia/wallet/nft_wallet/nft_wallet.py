@@ -912,7 +912,7 @@ class NFTWallet:
                     asset, coin_amount_needed, tx_config.coin_selection_config
                 )
                 if len(offered_coins) == 0:
-                    raise ValueError(f"Did not have asset ID {asset.hex() if asset is not None else 'KOP'} to offer")
+                    raise ValueError(f"Did not have asset ID {asset.hex() if asset is not None else 'CCH'} to offer")
                 offered_coins_by_asset[asset] = offered_coins
                 all_offered_coins.update(offered_coins)
 
@@ -1058,7 +1058,7 @@ class NFTWallet:
                                     break
                         assert royalty_coin is not None
                         assert parent_spend is not None
-                        if asset is None:  # If KOP
+                        if asset is None:  # If CCH
                             royalty_sol = inner_royalty_sol
                         else:
                             # call our drivers to solve the puzzle
@@ -1526,7 +1526,7 @@ class NFTWallet:
         fee: Optional[uint64] = uint64(0),
     ) -> SpendBundle:
         """
-        Minting NFTs from a single KOP spend using intermediate launcher puzzle
+        Minting NFTs from a single CCH spend using intermediate launcher puzzle
         :param metadata_list: A list of dicts containing the metadata for each NFT to be minted
         :param target_list: [Optional] a list of targets for transfering minted NFTs (aka airdrop)
         :param mint_number_start: [Optional] The starting point for mint number used in intermediate launcher
@@ -1563,7 +1563,7 @@ class NFTWallet:
         # chunk going into this spend bundle
         mint_number_end = mint_number_start + chunk_size
 
-        # Empty set to load with the announcements we will assert from KOP to
+        # Empty set to load with the announcements we will assert from CCH to
         # match the announcements from the intermediate launcher puzzle
         coin_announcements: Set[Any] = set()
         puzzle_assertions: Set[Any] = set()
@@ -1591,13 +1591,13 @@ class NFTWallet:
             )
             intermediate_coin_spends.append(intermediate_launcher_coin_spend)
 
-            # create an ASSERT_COIN_ANNOUNCEMENT for the KOP spend. The
+            # create an ASSERT_COIN_ANNOUNCEMENT for the CCH spend. The
             # intermediate launcher coin issues a CREATE_COIN_ANNOUNCEMENT of
             # the mint_number and mint_total for the launcher coin it creates
             intermediate_announcement_message = std_hash(int_to_bytes(mint_number) + int_to_bytes(mint_total))
             coin_announcements.add(std_hash(intermediate_launcher_coin.name() + intermediate_announcement_message))
 
-            # Create the launcher coin, and add its id to a list to be asserted in the KOP spend
+            # Create the launcher coin, and add its id to a list to be asserted in the CCH spend
             launcher_coin = Coin(intermediate_launcher_coin.name(), nft_puzzles.LAUNCHER_PUZZLE_HASH, amount)
             launcher_ids.append(launcher_coin.name())
 

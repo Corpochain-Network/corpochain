@@ -84,7 +84,7 @@ class Offer:
 
     @staticmethod
     def notarize_payments(
-        requested_payments: Dict[Optional[bytes32], List[Payment]],  # `None` means you are requesting KOP
+        requested_payments: Dict[Optional[bytes32], List[Payment]],  # `None` means you are requesting CCH
         coins: List[Coin],
     ) -> Dict[Optional[bytes32], List[NotarizedPayment]]:
         # This sort should be reproducible in CLVM with `>s`
@@ -218,7 +218,7 @@ class Offer:
                     else:
                         raise ValueError("Could not properly guess offered coins from parent spend")
             else:
-                # It's much easier if the asset is bare KOP
+                # It's much easier if the asset is bare CCH
                 asset_id = None
                 coins_for_this_spend.extend([a for a in additions if a.puzzle_hash == OFFER_MOD_HASH])
 

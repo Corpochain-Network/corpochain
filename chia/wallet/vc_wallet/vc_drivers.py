@@ -341,7 +341,7 @@ class VerifiedCredential(Streamable):
         """
         Launch a VC.
 
-        origin_coin: An KOP coin that will be used to fund the spend. A coin of any amount > 1 can be used and the
+        origin_coin: An CCH coin that will be used to fund the spend. A coin of any amount > 1 can be used and the
         change will automatically go back to the coin's puzzle hash.
         provider_id: The DID of the proof provider (the entity who is responsible for adding/removing proofs to the vc)
         new_inner_puzzle_hash: the innermost puzzle hash once the VC is created

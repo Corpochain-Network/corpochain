@@ -415,7 +415,7 @@ async def print_status(
         print(
             f"Current Farming address: {encode_puzzle_hash(target_ph, prefix)}, "
             f"with a balance of: "
-            f"{sum(coin_records.coin.amount for coin_records in farming_coin_records) / units['chia']} TKOP."
+            f"{sum(coin_records.coin.amount for coin_records in farming_coin_records) / units['chia']} TCCH."
         )
         if show_addresses:
             print("All Addresses: ")

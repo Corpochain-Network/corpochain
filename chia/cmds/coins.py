@@ -28,13 +28,13 @@ def coins_cmd(ctx: click.Context) -> None:
 @click.option("-u", "--show-unconfirmed", help="Separately display unconfirmed coins.", is_flag=True)
 @click.option(
     "--min-amount",
-    help="Ignore coins worth less then this much KOP or CAT units",
+    help="Ignore coins worth less then this much CCH or CAT units",
     type=str,
     default="0",
 )
 @click.option(
     "--max-amount",
-    help="Ignore coins worth more then this much KOP or CAT units",
+    help="Ignore coins worth more then this much CCH or CAT units",
     type=str,
     default="0",
 )
@@ -48,7 +48,7 @@ def coins_cmd(ctx: click.Context) -> None:
     "--exclude-amount",
     "amounts_to_exclude",
     multiple=True,
-    help="Exclude any coins with this KOP or CAT amount from being included.",
+    help="Exclude any coins with this CCH or CAT amount from being included.",
 )
 @click.option(
     "--paginate/--no-paginate",
@@ -98,14 +98,14 @@ def list_cmd(
 @click.option(
     "-a",
     "--target-amount",
-    help="Select coins until this amount (in KOP or CAT) is reached. \
+    help="Select coins until this amount (in CCH or CAT) is reached. \
     Combine all selected coins into one coin, which will have a value of at least target-amount",
     type=str,
     default="0",
 )
 @click.option(
     "--min-amount",
-    help="Ignore coins worth less then this much KOP or CAT units",
+    help="Ignore coins worth less then this much CCH or CAT units",
     type=str,
     default="0",
 )
@@ -113,7 +113,7 @@ def list_cmd(
     "--exclude-amount",
     "amounts_to_exclude",
     multiple=True,
-    help="Exclude any coins with this KOP or CAT amount from being included.",
+    help="Exclude any coins with this CCH or CAT amount from being included.",
 )
 @click.option(
     "-n",
@@ -125,14 +125,14 @@ def list_cmd(
 )
 @click.option(
     "--max-amount",
-    help="Ignore coins worth more then this much KOP or CAT units",
+    help="Ignore coins worth more then this much CCH or CAT units",
     type=str,
     default="0",  # 0 means no limit
 )
 @click.option(
     "-m",
     "--fee",
-    help="Set the fees for the transaction, in KOP",
+    help="Set the fees for the transaction, in CCH",
     type=str,
     default="0",
     show_default=True,
@@ -202,7 +202,7 @@ def combine_cmd(
 @click.option(
     "-m",
     "--fee",
-    help="Set the fees for the transaction, in KOP",
+    help="Set the fees for the transaction, in CCH",
     type=str,
     default="0",
     show_default=True,
@@ -211,7 +211,7 @@ def combine_cmd(
 @click.option(
     "-a",
     "--amount-per-coin",
-    help="The amount of each newly created coin, in KOP",
+    help="The amount of each newly created coin, in CCH",
     type=str,
     required=True,
 )

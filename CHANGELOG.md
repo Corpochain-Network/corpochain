@@ -44,7 +44,7 @@ All notable changes to this project will be documented in this file.
 - Added on-chain wallet notification mechanism with CLI
 - Added log warning when inserting into the mempool takes longer than 2 seconds
 - DataLayer
-- KOP Spam Filter
+- CCH Spam Filter
 - GUI Settings `Auto-Login` toggle (GUI only)
 - GUI Settings section for `DataLayer`
   - `Enable DataLayer` toggle
@@ -155,7 +155,7 @@ All notable changes to this project will be documented in this file.
 - Add coin id and address to NFT Details screen in GUI
 - New GUI prefs location under `CRYPTOMINES_ROOT`
 - Removed SkyNFT references
-- Add GUI memo field when sending KOP
+- Add GUI memo field when sending CCH
 - Update to Electron 20.3.5
 - RPC incompatibility: `/get_routes` and `/healthz` now return a boolean for success (previously was a string)
 - New Windows installer created with `electron-builder`

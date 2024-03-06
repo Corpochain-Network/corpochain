@@ -141,25 +141,25 @@ def get_transactions_cmd(
 )
 @options.create_fingerprint()
 @click.option("-i", "--id", help="Id of the wallet to use", type=int, default=1, show_default=True, required=True)
-@click.option("-a", "--amount", help="How much chia to send, in KOP", type=str, required=True)
+@click.option("-a", "--amount", help="How much chia to send, in CCH", type=str, required=True)
 @click.option("-e", "--memo", help="Additional memo for the transaction", type=str, default=None)
 @click.option(
     "-m",
     "--fee",
-    help="Set the fees for the transaction, in KOP",
+    help="Set the fees for the transaction, in CCH",
     type=str,
     default="0",
     show_default=True,
     required=True,
 )
-@click.option("-t", "--address", help="Address to send the KOP", type=str, required=True)
+@click.option("-t", "--address", help="Address to send the CCH", type=str, required=True)
 @click.option(
     "-o", "--override", help="Submits transaction without checking for unusual values", is_flag=True, default=False
 )
 @click.option(
     "-ma",
     "--min-coin-amount",
-    help="Ignore coins worth less then this much KOP or CAT units",
+    help="Ignore coins worth less then this much CCH or CAT units",
     type=str,
     required=False,
     default="0",
@@ -167,7 +167,7 @@ def get_transactions_cmd(
 @click.option(
     "-l",
     "--max-coin-amount",
-    help="Ignore coins worth more then this much KOP or CAT units",
+    help="Ignore coins worth more then this much CCH or CAT units",
     type=str,
     required=False,
     default="0",
@@ -299,7 +299,7 @@ def get_address_cmd(wallet_rpc_port: Optional[int], id: int, fingerprint: int, n
     required=True,
 )
 @click.option(
-    "-m", "--fee", help="A fee to add to the offer when it gets taken, in KOP", default="0", show_default=True
+    "-m", "--fee", help="A fee to add to the offer when it gets taken, in CCH", default="0", show_default=True
 )
 @click.option(
     "--force",
@@ -368,7 +368,7 @@ def address_sign_message(wallet_rpc_port: Optional[int], fingerprint: int, addre
         sign_message(
             wallet_rpc_port=wallet_rpc_port,
             fp=fingerprint,
-            addr_type=AddressType.KOP,
+            addr_type=AddressType.CCH,
             message=hex_message,
             address=address,
         )
@@ -421,7 +421,7 @@ def add_token_cmd(wallet_rpc_port: Optional[int], asset_id: str, token_name: str
     asyncio.run(add_token(wallet_rpc_port, fingerprint, asset_id, token_name))
 
 
-@wallet_cmd.command("make_offer", help="Create an offer of KOP/CATs/NFTs for KOP/CATs/NFTs")
+@wallet_cmd.command("make_offer", help="Create an offer of CCH/CATs/NFTs for CCH/CATs/NFTs")
 @click.option(
     "-wp",
     "--wallet-rpc-port",
@@ -446,7 +446,7 @@ def add_token_cmd(wallet_rpc_port: Optional[int], asset_id: str, token_name: str
 )
 @click.option("-p", "--filepath", help="The path to write the generated offer file to", required=True)
 @click.option(
-    "-m", "--fee", help="A fee to add to the offer when it gets taken, in KOP", default="0", show_default=True
+    "-m", "--fee", help="A fee to add to the offer when it gets taken, in CCH", default="0", show_default=True
 )
 @click.option(
     "--reuse",
@@ -538,7 +538,7 @@ def get_offers_cmd(
 @options.create_fingerprint()
 @click.option("-e", "--examine-only", help="Print the summary of the offer file but do not take it", is_flag=True)
 @click.option(
-    "-m", "--fee", help="The fee to use when pushing the completed offer, in KOP", default="0", show_default=True
+    "-m", "--fee", help="The fee to use when pushing the completed offer, in CCH", default="0", show_default=True
 )
 @click.option(
     "--reuse",
@@ -571,7 +571,7 @@ def take_offer_cmd(
 @click.option("-id", "--id", help="The offer ID that you wish to cancel", required=True)
 @click.option("--insecure", help="Don't make an on-chain transaction, simply mark the offer as cancelled", is_flag=True)
 @click.option(
-    "-m", "--fee", help="The fee to use when cancelling the offer securely, in KOP", default="0", show_default=True
+    "-m", "--fee", help="The fee to use when cancelling the offer securely, in CCH", default="0", show_default=True
 )
 def cancel_offer_cmd(wallet_rpc_port: Optional[int], fingerprint: int, id: str, insecure: bool, fee: str) -> None:
     from .wallet_funcs import cancel_offer
@@ -619,7 +619,7 @@ def did_cmd() -> None:
 @click.option(
     "-m",
     "--fee",
-    help="Set the fees per transaction, in KOP.",
+    help="Set the fees per transaction, in CCH.",
     type=str,
     default="0",
     show_default=True,
@@ -855,7 +855,7 @@ def did_message_spend_cmd(
 @click.option(
     "-m",
     "--fee",
-    help="Set the fees per transaction, in KOP.",
+    help="Set the fees per transaction, in CCH.",
     type=str,
     default="0",
     show_default=True,
@@ -958,7 +958,7 @@ def nft_sign_message(wallet_rpc_port: Optional[int], fingerprint: int, nft_id: s
 @click.option(
     "-m",
     "--fee",
-    help="Set the fees per transaction, in KOP.",
+    help="Set the fees per transaction, in CCH.",
     type=str,
     default="0",
     show_default=True,
@@ -1049,7 +1049,7 @@ def nft_mint_cmd(
 @click.option(
     "-m",
     "--fee",
-    help="Set the fees per transaction, in KOP.",
+    help="Set the fees per transaction, in CCH.",
     type=str,
     default="0",
     show_default=True,
@@ -1104,7 +1104,7 @@ def nft_add_uri_cmd(
 @click.option(
     "-m",
     "--fee",
-    help="Set the fees per transaction, in KOP.",
+    help="Set the fees per transaction, in CCH.",
     type=str,
     default="0",
     show_default=True,
@@ -1173,7 +1173,7 @@ def nft_list_cmd(wallet_rpc_port: Optional[int], fingerprint: int, id: int, num:
 @click.option(
     "-m",
     "--fee",
-    help="Set the fees per transaction, in KOP.",
+    help="Set the fees per transaction, in CCH.",
     type=str,
     default="0",
     show_default=True,
@@ -1258,7 +1258,7 @@ def notification_cmd() -> None:
     show_default=True,
 )
 @click.option("-n", "--message", help="The message of the notification", type=str)
-@click.option("-m", "--fee", help="The fee for the transaction, in KOP", type=str)
+@click.option("-m", "--fee", help="The fee for the transaction, in CCH", type=str)
 def send_notification_cmd(
     wallet_rpc_port: Optional[int],
     fingerprint: int,
@@ -1334,7 +1334,7 @@ def vcs_cmd() -> None:  # pragma: no cover
 @options.create_fingerprint()
 @click.option("-d", "--did", help="The DID of the VC's proof provider", type=str, required=True)
 @click.option("-t", "--target-address", help="The address to send the VC to once it's minted", type=str, required=False)
-@click.option("-m", "--fee", help="Blockchain fee for mint transaction, in KOP", type=str, required=False, default="0")
+@click.option("-m", "--fee", help="Blockchain fee for mint transaction, in CCH", type=str, required=False, default="0")
 def mint_vc_cmd(
     wallet_rpc_port: Optional[int],
     fingerprint: int,
@@ -1392,7 +1392,7 @@ def get_vcs_cmd(
 )
 @click.option("-p", "--new-proof-hash", help="The new proof hash to update the VC to", type=str, required=True)
 @click.option(
-    "-m", "--fee", help="Blockchain fee for update transaction, in KOP", type=str, required=False, default="0"
+    "-m", "--fee", help="Blockchain fee for update transaction, in CCH", type=str, required=False, default="0"
 )
 @click.option(
     "--reuse-puzhash/--generate-new-puzhash",
@@ -1490,7 +1490,7 @@ def get_proofs_for_root_cmd(
     required=False,
 )
 @click.option(
-    "-m", "--fee", help="Blockchain fee for revocation transaction, in KOP", type=str, required=False, default="0"
+    "-m", "--fee", help="Blockchain fee for revocation transaction, in CCH", type=str, required=False, default="0"
 )
 @click.option(
     "--reuse-puzhash/--generate-new-puzhash",
@@ -1525,7 +1525,7 @@ def revoke_vc_cmd(
     "-a", "--min-amount-to-claim", help="The minimum amount to approve to move into the wallet", type=str, required=True
 )
 @click.option(
-    "-m", "--fee", type=str, default=0, show_default=True, help="Blockchain fee for approval transaction, in KOP"
+    "-m", "--fee", type=str, default=0, show_default=True, help="Blockchain fee for approval transaction, in CCH"
 )
 @click.option("-ma", "--min-coin-amount", type=Decimal, help="The minimum coin amount to select")
 @click.option("-l", "--max-coin-amount", type=Decimal, help="The maximum coin amount to select")

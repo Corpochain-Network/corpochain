@@ -8,7 +8,7 @@ from chia.util.config import selected_network_address_prefix
 
 
 class AddressType(Enum):
-    CCH = "kop"
+    CCH = "cch"
     NFT = "nft"
     DID = "did:corpochain:"
 

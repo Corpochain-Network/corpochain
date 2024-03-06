@@ -284,7 +284,7 @@ if sys.platform == "win32":
                 ov.getresult()
                 # Use SO_UPDATE_ACCEPT_CONTEXT so getsockname() etc work.
                 buf = struct.pack("@P", listener.fileno())
-                conn.setsockopt(socket.SOL_SOCKET, _overlapped.SO_UPDATE_ACCEPT_CONTEXT, buf)
+                conn.setsocccht(socket.SOL_SOCKET, _overlapped.SO_UPDATE_ACCEPT_CONTEXT, buf)
                 conn.settimeout(listener.gettimeout())
                 return conn, conn.getpeername()
 

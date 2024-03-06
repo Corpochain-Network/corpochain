@@ -112,7 +112,7 @@ All notable changes to this project will be documented in this file.
 - Added `config.yaml` option to run the `full_node` in single-threaded mode
 - Build cli only version of debs
 - Add `/get_stray_cats` API for accessing unknown CATs
-- Added checks to ensure wallet address prefixes are either `kop` or `tkop`.
+- Added checks to ensure wallet address prefixes are either `cch` or `tcch`.
 - Added a better TLS1.3 check to handle cases where python is using a non-openssl TLS library.
 
 ### Changed

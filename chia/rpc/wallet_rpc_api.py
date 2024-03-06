@@ -441,8 +441,8 @@ class WalletRpcApi:
             return False, False
 
         config: Dict[str, Any] = load_config(new_root, "config.yaml")
-        farmer_target = config["farmer"].get("kop_target_address")
-        pool_target = config["pool"].get("kop_target_address")
+        farmer_target = config["farmer"].get("cch_target_address")
+        pool_target = config["pool"].get("cch_target_address")
         address_to_check: List[bytes32] = [decode_puzzle_hash(farmer_target), decode_puzzle_hash(pool_target)]
 
         found_addresses: Set[bytes32] = match_address_to_sk(sk, address_to_check, max_ph_to_search)
@@ -1851,7 +1851,7 @@ class WalletRpcApi:
         if cancel_all:
             asset_id = None
         else:
-            asset_id = request.get("asset_id", "kop")
+            asset_id = request.get("asset_id", "cch")
 
         start: int = 0
         end: int = start + batch_size
@@ -1859,7 +1859,7 @@ class WalletRpcApi:
         log.info(f"Start cancelling offers for  {'asset_id: ' + asset_id if asset_id is not None else 'all'} ...")
         # Traverse offers page by page
         key = None
-        if asset_id is not None and asset_id != "kop":
+        if asset_id is not None and asset_id != "cch":
             key = bytes32.from_hexstr(asset_id)
         while True:
             records: Dict[bytes32, TradeRecord] = {}
@@ -2906,16 +2906,16 @@ class WalletRpcApi:
                 target_list.append(decode_puzzle_hash(target))
         mint_number_start = request.get("mint_number_start", 1)
         mint_total = request.get("mint_total", None)
-        xch_coin_list = request.get("kop_coins", None)
-        kop_coins = None
+        xch_coin_list = request.get("cch_coins", None)
+        cch_coins = None
         if xch_coin_list:
-            kop_coins = set([Coin.from_json_dict(xch_coin) for xch_coin in xch_coin_list])
-        kop_change_target = request.get("kop_change_target", None)
-        if kop_change_target is not None:
-            if kop_change_target[:2] == "kop":
-                xch_change_ph = decode_puzzle_hash(kop_change_target)
+            cch_coins = set([Coin.from_json_dict(xch_coin) for xch_coin in xch_coin_list])
+        cch_change_target = request.get("cch_change_target", None)
+        if cch_change_target is not None:
+            if cch_change_target[:2] == "cch":
+                xch_change_ph = decode_puzzle_hash(cch_change_target)
             else:
-                xch_change_ph = bytes32(hexstr_to_bytes(kop_change_target))
+                xch_change_ph = bytes32(hexstr_to_bytes(cch_change_target))
         else:
             xch_change_ph = None
         new_innerpuzhash = request.get("new_innerpuzhash", None)
@@ -2939,7 +2939,7 @@ class WalletRpcApi:
                 mint_number_start=mint_number_start,
                 mint_total=mint_total,
                 target_list=target_list,
-                kop_coins=kop_coins,
+                cch_coins=cch_coins,
                 xch_change_ph=xch_change_ph,
                 new_innerpuzhash=new_innerpuzhash,
                 new_p2_puzhash=new_p2_puzhash,
@@ -2954,7 +2954,7 @@ class WalletRpcApi:
                 mint_number_start=mint_number_start,
                 mint_total=mint_total,
                 target_list=target_list,
-                kop_coins=kop_coins,
+                cch_coins=cch_coins,
                 xch_change_ph=xch_change_ph,
                 fee=fee,
                 tx_config=tx_config,

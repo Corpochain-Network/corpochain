@@ -248,7 +248,7 @@ async def async_split(
         tx_id = transaction.name.hex()
         print(f"Transaction sent: {tx_id}")
         print(f"To get status, use command: chia wallet get_transaction -f {fingerprint} -tx 0x{tx_id}")
-        dust_threshold = config.get("kop_spam_amount", 1000000)  # min amount per coin in mojo
+        dust_threshold = config.get("cch_spam_amount", 1000000)  # min amount per coin in mojo
         spam_filter_after_n_txs = config.get("spam_filter_after_n_txs", 200)  # how many txs to wait before filtering
         if final_amount_per_coin < dust_threshold and wallet_type == WalletType.STANDARD_WALLET:
             print(

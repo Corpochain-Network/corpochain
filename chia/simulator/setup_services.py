@@ -257,7 +257,7 @@ async def setup_wallet_node(
     consensus_constants: ConsensusConstants,
     local_bt: BlockTools,
     spam_filter_after_n_txs: Optional[int] = 200,
-    kop_spam_amount: int = 1000000,
+    cch_spam_amount: int = 1000000,
     full_node_port: Optional[uint16] = None,
     introducer_port: Optional[uint16] = None,
     key_seed: Optional[bytes] = None,
@@ -271,7 +271,7 @@ async def setup_wallet_node(
         service_config["rpc_port"] = 0
         service_config["initial_num_public_keys"] = initial_num_public_keys
         service_config["spam_filter_after_n_txs"] = spam_filter_after_n_txs
-        service_config["kop_spam_amount"] = kop_spam_amount
+        service_config["cch_spam_amount"] = cch_spam_amount
 
         entropy = token_bytes(32)
         if key_seed is None:
@@ -377,11 +377,11 @@ async def setup_farmer(
     service_config = root_config["farmer"]
     config_pool = root_config["pool"]
 
-    service_config["kop_target_address"] = encode_puzzle_hash(b_tools.farmer_ph, "kop")
+    service_config["cch_target_address"] = encode_puzzle_hash(b_tools.farmer_ph, "cch")
     service_config["pool_public_keys"] = [bytes(pk).hex() for pk in b_tools.pool_pubkeys]
     service_config["port"] = port
     service_config["rpc_port"] = uint16(0)
-    config_pool["kop_target_address"] = encode_puzzle_hash(b_tools.pool_ph, "kop")
+    config_pool["cch_target_address"] = encode_puzzle_hash(b_tools.pool_ph, "cch")
 
     if full_node_port:
         service_config["full_node_peer"]["host"] = self_hostname

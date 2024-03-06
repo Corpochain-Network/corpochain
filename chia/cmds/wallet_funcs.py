@@ -573,10 +573,10 @@ async def print_offer_summary(
     for asset_id, amount in sum_dict.items():
         description: str = ""
         unit: int = units["chia"]
-        wid: str = "1" if asset_id == "kop" else ""
+        wid: str = "1" if asset_id == "cch" else ""
         mojo_amount: int = int(Decimal(amount))
         name: str = network_xch
-        if asset_id != "kop":
+        if asset_id != "cch":
             name = asset_id
             if asset_id == "unknown":
                 name = "Unknown"
@@ -724,7 +724,7 @@ async def take_offer(
         if royalty_asset_dict != {}:
             fungible_asset_dict: Dict[Any, uint64] = {}
             for fungible_asset_id in fungible_assets_from_offer(offer):
-                fungible_asset_id_str = fungible_asset_id.hex() if fungible_asset_id is not None else "kop"
+                fungible_asset_id_str = fungible_asset_id.hex() if fungible_asset_id is not None else "cch"
                 if fungible_asset_id_str in requested:
                     nft_royalty_currency: str = "Unknown CAT"
                     if fungible_asset_id is None:

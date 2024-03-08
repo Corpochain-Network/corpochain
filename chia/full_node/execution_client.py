@@ -16,13 +16,13 @@ from web3.providers.rpc import URI
 import jwt
 from hexbytes import HexBytes
 
-from bpx.util.path import path_from_root
-from bpx.consensus.block_record import BlockRecord
-from bpx.types.blockchain_format.sized_bytes import bytes20, bytes32, bytes256
-from bpx.util.ints import uint64, uint256
-from bpx.types.blockchain_format.execution_payload import ExecutionPayloadV2, WithdrawalV1
-from bpx.util.byte_types import hexstr_to_bytes
-from bpx.consensus.block_rewards import create_withdrawals
+from chia.util.path import path_from_root
+from chia.consensus.block_record import BlockRecord
+from chia.types.blockchain_format.sized_bytes import bytes20, bytes32, bytes256
+from chia.util.ints import uint64, uint256
+from chia.types.blockchain_format.execution_payload import ExecutionPayloadV2, WithdrawalV1
+from chia.util.byte_types import hexstr_to_bytes
+from chia.consensus.block_rewards import create_withdrawals
 
 COINBASE_NULL = bytes20.fromhex("0000000000000000000000000000000000000000")
 BLOCK_HASH_NULL = bytes32.fromhex("0000000000000000000000000000000000000000000000000000000000000000")

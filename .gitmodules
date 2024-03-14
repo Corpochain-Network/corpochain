@@ -4,4 +4,4 @@
         branch = main
 [submodule "corpochain-gui"]
 	path = corpochain-gui
-	url = https://github.com/serwisgalena/corpochain-gui.git
+	url = https://github.com/Corpochain-Network/corpochain-gui

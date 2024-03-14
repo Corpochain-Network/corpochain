@@ -122,8 +122,8 @@ kwargs = dict(
     long_description_content_type="text/markdown",
     zip_safe=False,
     project_urls={
-        "Source": "https://github.com/serwisgalena/corpochain/",
-        "Changelog": "https://github.com/serwisgalena/corpochain/blob/main/CHANGELOG.md",
+        "Source": "https:///corpochain/",
+        "Changelog": "https:///corpochain/blob/main/CHANGELOG.md",
     },
 )
 

@@ -42,7 +42,7 @@ def init_cmd(
     - Run `corpochain init -c [directory]` on your remote harvester,
       where [directory] is the the copy of your Farming Machine CA directory
     - Get more details on remote harvester on Corpochain wiki:
-      https://github.com/serwisgalena/corpochain/wiki/Farming-on-many-machines
+      https://github.com/Corpochain-Network/corpochain/wiki/Farming-on-many-machines
     """
     from pathlib import Path
 

@@ -10,7 +10,7 @@
 
 2. Download repository with submodules.
 
-        git clone https://github.com/serwisgalena/corpochain.git --recurse-submodules
+        git clone https:///corpochain.git --recurse-submodules
 
 3. Go to "./corpochain".
 

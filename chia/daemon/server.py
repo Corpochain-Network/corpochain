@@ -1337,8 +1337,8 @@ def plotter_log_path(root_path: Path, id: str):
 def launch_plotter(
     root_path: Path, service_name: str, service_array: List[str], id: str
 ) -> Tuple[subprocess.Popen, Path]:
-    # we need to pass on the possibly altered CRYPTOMINES_ROOT
-    os.environ["CRYPTOMINES_ROOT"] = str(root_path)
+    # we need to pass on the possibly altered CORPOCHAIN_ROOT
+    os.environ["CORPOCHAIN_ROOT"] = str(root_path)
     service_executable = executable_for_service(service_array[0])
 
     # Swap service name with name of executable
@@ -1383,12 +1383,12 @@ def launch_service(root_path: Path, service_command) -> Tuple[subprocess.Popen, 
     """
     Launch a child process.
     """
-    # set up CRYPTOMINES_ROOT
+    # set up CORPOCHAIN_ROOT
     # invoke correct script
     # save away PID
 
-    # we need to pass on the possibly altered CRYPTOMINES_ROOT
-    os.environ["CRYPTOMINES_ROOT"] = str(root_path)
+    # we need to pass on the possibly altered CORPOCHAIN_ROOT
+    os.environ["CORPOCHAIN_ROOT"] = str(root_path)
 
     # Insert proper e
     service_array = service_command.split()
@@ -1400,7 +1400,7 @@ def launch_service(root_path: Path, service_command) -> Tuple[subprocess.Popen, 
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
-    log.debug(f"Launching service {service_array} with CRYPTOMINES_ROOT: {os.environ['CRYPTOMINES_ROOT']}")
+    log.debug(f"Launching service {service_array} with CORPOCHAIN_ROOT: {os.environ['CORPOCHAIN_ROOT']}")
 
     # CREATE_NEW_PROCESS_GROUP allows graceful shutdown on windows, by CTRL_BREAK_EVENT signal
     if sys.platform == "win32" or sys.platform == "cygwin":

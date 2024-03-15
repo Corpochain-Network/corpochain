@@ -15,8 +15,8 @@ from typing import Any, Dict, Iterator, List
 
 # to enable this instrumentation, set one of the environment variables:
 
-#   CRYPTOMINES_INSTRUMENT_NODE=1
-#   CRYPTOMINES_INSTRUMENT_WALLET=1
+#   CORPOCHAIN_INSTRUMENT_NODE=1
+#   CORPOCHAIN_INSTRUMENT_WALLET=1
 
 # Before starting the daemon.
 

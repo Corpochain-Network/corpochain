@@ -131,5 +131,5 @@ if "setup_file" in sys.modules:
     # include dev deps in regular deps when run in snyk
     dependencies.extend(dev_dependencies)
 
-if len(os.environ.get("CRYPTOMINES_SKIP_SETUP", "")) < 1:
+if len(os.environ.get("CORPOCHAIN_SKIP_SETUP", "")) < 1:
     setup(**kwargs)  # type: ignore

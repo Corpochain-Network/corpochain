@@ -153,7 +153,7 @@ All notable changes to this project will be documented in this file.
 - Add support for pending transactions to `get_mempool_item_by_tx_id()`
 - Simplify the mempool manager instantiation
 - Add coin id and address to NFT Details screen in GUI
-- New GUI prefs location under `CRYPTOMINES_ROOT`
+- New GUI prefs location under `CORPOCHAIN_ROOT`
 - Removed SkyNFT references
 - Add GUI memo field when sending CCH
 - Update to Electron 20.3.5
@@ -353,7 +353,7 @@ All notable changes to this project will be documented in this file.
 - Simplify install.sh ubuntu version tracking
 - Optimize BLS verification when public key is repeated
 - Use Install.ps1 in build_windows.ps1
-- Updated warning about `CRYPTOMINES_ROOT` being set when running init
+- Updated warning about `CORPOCHAIN_ROOT` being set when running init
 - Cmds: Adjust stop daemon output
 - Remove unused functions on MerkleSet
 - Optimize `hash_coin_list()`

@@ -293,13 +293,13 @@ jobs:
         echo CHIA_DEV_BUILD=${CHIA_DEV_BUILD} >> "$GITHUB_OUTPUT"
         echo ${CHIA_DEV_BUILD}
         pwd
-        aws s3 cp corpochain-gui/release-builds/windows-installer/CorpochainSetup-${CORPOCHAIN_INSTALLER_VERSION}.exe s3://download.chia.net/dev/CryptominesSetup-${CHIA_DEV_BUILD}.exe
+        aws s3 cp corpochain-gui/release-builds/windows-installer/CorpochainSetup-${CORPOCHAIN_INSTALLER_VERSION}.exe s3://download.chia.net/dev/CorpochainSetup-${CHIA_DEV_BUILD}.exe
 
     - name: Create Checksums
       env:
         CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
       run: |
-         certutil.exe -hashfile ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe SHA256 > ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe.sha256
+         certutil.exe -hashfile ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CorpochainSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe SHA256 > ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CorpochainSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe.sha256
          ls ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\
 
     - name: Create torrent
@@ -307,24 +307,24 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        py3createtorrent -f -t udp://tracker.opentrackr.org:1337/announce ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe -o ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe.torrent --webseed https://download.chia.net/install/CryptominesSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe
+        py3createtorrent -f -t udp://tracker.opentrackr.org:1337/announce ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CorpochainSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe -o ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CorpochainSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe.torrent --webseed https://download.chia.net/install/CorpochainSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe
         ls
-        gh release upload $env:RELEASE_TAG ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe.torrent
+        gh release upload $env:RELEASE_TAG ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CorpochainSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe.torrent
 
     - name: Upload Dev Installer
       if: steps.check_secrets.outputs.HAS_AWS_SECRET && github.ref == 'refs/heads/main'
       env:
         CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
       run: |
-        aws s3 cp ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe s3://download.chia.net/latest-dev/CryptominesSetup-latest-dev.exe
-        aws s3 cp ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe.sha256 s3://download.chia.net/latest-dev/CryptominesSetup-latest-dev.exe.sha256
+        aws s3 cp ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CorpochainSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe s3://download.chia.net/latest-dev/CorpochainSetup-latest-dev.exe
+        aws s3 cp ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CorpochainSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe.sha256 s3://download.chia.net/latest-dev/CorpochainSetup-latest-dev.exe.sha256
 
     - name: Upload Release Files
       if: steps.check_secrets.outputs.HAS_AWS_SECRET && env.FULL_RELEASE == 'true'
       run: |
-        aws s3 cp ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe s3://download.chia.net/install/
-        aws s3 cp ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe.sha256 s3://download.chia.net/install/
-        aws s3 cp ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe.torrent s3://download.chia.net/torrents/
+        aws s3 cp ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CorpochainSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe s3://download.chia.net/install/
+        aws s3 cp ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CorpochainSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe.sha256 s3://download.chia.net/install/
+        aws s3 cp ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CorpochainSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe.torrent s3://download.chia.net/torrents/
 
     - name: Upload release artifacts
       if: env.RELEASE == 'true'
@@ -332,7 +332,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CORPOCHAIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}
       run: |
-        gh release upload $env:RELEASE_TAG ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe
+        gh release upload $env:RELEASE_TAG ${{ github.workspace }}\corpochain-gui\release-builds\windows-installer\CorpochainSetup-${{ steps.version_number.outputs.CORPOCHAIN_INSTALLER_VERSION }}.exe
 
     - name: Mark pre-release installer complete
       if: steps.check_secrets.outputs.HAS_GLUE_SECRET && env.PRE_RELEASE == 'true'
@@ -362,5 +362,5 @@ jobs:
       run: |
         Remove-Item .\corpochain-gui\packages\gui\dist -Recurse -Force
         Remove-Item .\corpochain-gui\packages\gui\daemon -Recurse -Force
-        Remove-Item .\corpochain-gui\Cryptomines-win32-x64 -Recurse -Force
+        Remove-Item .\corpochain-gui\Corpochain-win32-x64 -Recurse -Force
         Remove-Item .\corpochain-gui\release-builds -Recurse -Force

@@ -327,13 +327,13 @@ def chia_init(
     protected Keychain. When launching the daemon from the GUI, we want the GUI to
     handle unlocking the keychain.
     """
-    chia_root = os.environ.get("CRYPTOMINES_ROOT", None)
+    chia_root = os.environ.get("CORPOCHAIN_ROOT", None)
     if chia_root is not None:
-        print(f"CRYPTOMINES_ROOT is set to {chia_root}")
+        print(f"CORPOCHAIN_ROOT is set to {chia_root}")
 
     print(f"Corpochain directory {root_path}")
     if root_path.is_dir() and Path(root_path / "config" / "config.yaml").exists():
-        # This is reached if CRYPTOMINES_ROOT is set, or if user has run corpochain init twice
+        # This is reached if CORPOCHAIN_ROOT is set, or if user has run corpochain init twice
         # before a new update.
         if testnet:
             configure(

@@ -102,7 +102,7 @@ async def async_main() -> int:
 def main() -> int:
     freeze_support()
 
-    with maybe_manage_task_instrumentation(enable=os.environ.get("CRYPTOMINES_INSTRUMENT_WALLET") is not None):
+    with maybe_manage_task_instrumentation(enable=os.environ.get("CORPOCHAIN_INSTRUMENT_WALLET") is not None):
         return async_run(async_main())
 
 

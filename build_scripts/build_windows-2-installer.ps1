@@ -54,7 +54,7 @@ editbin.exe /STACK:8000000 daemon\corpochain.exe
 Write-Output "   ---"
 
 $packageVersion = "$env:CORPOCHAIN_INSTALLER_VERSION"
-$packageName = "Cryptomines-$packageVersion"
+$packageName = "Corpochain-$packageVersion"
 
 Write-Output "packageName is $packageName"
 
@@ -95,11 +95,11 @@ Write-Output "   ---"
 If ($env:HAS_SIGNING_SECRET) {
    Write-Output "   ---"
    Write-Output "Sign Final Installer App"
-   signtool.exe sign /sha1 $env:SM_CODE_SIGNING_CERT_SHA1_HASH /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 .\dist\CryptominesSetup-$packageVersion.exe
+   signtool.exe sign /sha1 $env:SM_CODE_SIGNING_CERT_SHA1_HASH /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 .\dist\CorpochainSetup-$packageVersion.exe
    Write-Output "   ---"
    Write-Output "Verify signature"
    Write-Output "   ---"
-   signtool.exe verify /v /pa .\dist\CryptominesSetup-$packageVersion.exe
+   signtool.exe verify /v /pa .\dist\CorpochainSetup-$packageVersion.exe
 }   Else    {
    Write-Output "Skipping verify signatures - no authorization to install certificates"
 }
@@ -107,9 +107,9 @@ If ($env:HAS_SIGNING_SECRET) {
 Write-Output "   ---"
 Write-Output "Moving final installers to expected location"
 Write-Output "   ---"
-Copy-Item ".\dist\win-unpacked" -Destination "$env:GITHUB_WORKSPACE\corpochain-gui\Cryptomines-win32-x64" -Recurse
+Copy-Item ".\dist\win-unpacked" -Destination "$env:GITHUB_WORKSPACE\corpochain-gui\Corpochain-win32-x64" -Recurse
 mkdir "$env:GITHUB_WORKSPACE\corpochain-gui\release-builds\windows-installer" -ea 0
-Copy-Item ".\dist\CryptominesSetup-$packageVersion.exe" -Destination "$env:GITHUB_WORKSPACE\corpochain-gui\release-builds\windows-installer"
+Copy-Item ".\dist\CorpochainSetup-$packageVersion.exe" -Destination "$env:GITHUB_WORKSPACE\corpochain-gui\release-builds\windows-installer"
 
 Write-Output "   ---"
 Write-Output "Windows Installer complete"

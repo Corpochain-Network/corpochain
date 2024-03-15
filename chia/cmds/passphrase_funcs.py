@@ -154,7 +154,7 @@ def prompt_for_new_passphrase() -> Tuple[str, bool]:
 
 
 def read_passphrase_from_file(passphrase_file: TextIOWrapper) -> str:
-    passphrase = passphrase_file.read().rstrip(os.environ.get("CRYPTOMINES_PASSPHRASE_STRIP_TRAILING_CHARS", "\r\n"))
+    passphrase = passphrase_file.read().rstrip(os.environ.get("CORPOCHAIN_PASSPHRASE_STRIP_TRAILING_CHARS", "\r\n"))
     passphrase_file.close()
     return passphrase
 

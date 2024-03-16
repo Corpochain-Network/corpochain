@@ -78,10 +78,10 @@ legacy_keyring_dependencies = [
 
 kwargs = dict(
     name="corpochain",
-    author="Kopalnie Krypto",
-    author_email="kontakt@cchalniekrypto.pl",
+    author="Serwis Galena",
+    author_email="serwisgalena@gmail.com",
     description="Corpochain blockchain full node, farmer, timelord, and wallet.",
-    url="https://chiablockchain.pl/",
+    url="https://corpochain.pl/",
     license="Apache License",
     python_requires=">=3.8.1, <4",
     keywords="corpochain blockchain node",
@@ -122,8 +122,8 @@ kwargs = dict(
     long_description_content_type="text/markdown",
     zip_safe=False,
     project_urls={
-        "Source": "https:///corpochain/",
-        "Changelog": "https:///corpochain/blob/main/CHANGELOG.md",
+        "Source": "https://github.com/Corpochain-Network/corpochain",
+        "Changelog": "https://github.com/Corpochain-Network/corpochain/blob/main/CHANGELOG.md",
     },
 )
 

@@ -91,7 +91,7 @@ def create_withdrawals(
                 next_wd_index,
                 uint64(1),
                 curr.coinbase,
-                _calculate_v3_reward(curr.height, constants.V2_EOL_HEIGHT),
+                _calculate_v3_reward(curr.height + 1),
             )
         )
         next_wd_index += 1

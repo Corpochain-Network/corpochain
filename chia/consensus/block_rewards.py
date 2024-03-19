@@ -71,6 +71,18 @@ def create_withdrawals(
     else:
         next_wd_index = prev_tx_block.last_withdrawal_index + 1
     
+    if prev_tx_block.height == 0:
+        # Add bridge withdrawal
+        withdrawals.append(
+            WithdrawalV1(
+                next_wd_index,
+                uint64(0),
+                constants.BRIDGE_ADDRESS,
+                2500000 * _bpx_to_gwei,
+            )
+        )
+        next_wd_index += 1
+    
     # Add block rewards
     curr: BlockRecord = prev_tx_block
     while True:
@@ -79,7 +91,7 @@ def create_withdrawals(
                 next_wd_index,
                 uint64(1),
                 curr.coinbase,
-                _calculate_v3_reward(curr.height + 1),
+                _calculate_v3_reward(curr.height, constants.V2_EOL_HEIGHT),
             )
         )
         next_wd_index += 1

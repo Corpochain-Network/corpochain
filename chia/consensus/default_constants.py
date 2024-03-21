@@ -71,7 +71,7 @@ default_kwargs = {
     # Disallow plots from passing the plot filter for more than one out of any four consecutive signage points.
     "UNIQUE_PLOTS_WINDOW": 4,
     "GENESIS_EXECUTION_BLOCK_HASH": bytes.fromhex("0000000000000000000000000000000000000000000000000000000000000000"),
-    "BRIDGE_ADDRESS": bytes.fromhex("0000000000000000000000000000000000000000")
+    "BRIDGE_ADDRESS": bytes.fromhex("0000000000000000000000000000000000000000"),
 }
 
 

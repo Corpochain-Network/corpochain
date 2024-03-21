@@ -479,7 +479,7 @@ class FullNodeAPI:
         self, new_sp: full_node_protocol.NewSignagePointOrEndOfSubSlot, peer: WSChiaConnection
     ) -> Optional[Message]:
         # Ignore if syncing
-        if self.beacon.sync_store.get_sync_mode() or self.beacon.execution_client.syncing:
+        if self.full_node.sync_store.get_sync_mode() or self.full_node.execution_client.syncing:
             return None
         if (
             self.full_node.full_node_store.get_signage_point_by_index(

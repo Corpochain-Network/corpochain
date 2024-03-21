@@ -65,7 +65,7 @@ class EngineModule(Module):
     new_payload_v2 = Method("engine_newPayloadV2")
 
 class ExecutionClient:
-    beacon: Beacon
+    beacon: FullNode
     w3: Web3
     peak_txb_hash: Optional[bytes32]
     payload_id: Optional[str]

@@ -65,30 +65,6 @@ async def validate_block_body(
     prev_transaction_block_height: uint32 = uint32(0)
     prev_transaction_block_timestamp: uint64 = uint64(0)
 
-    status = await execution_client.new_payload(block.execution_payload)
-    if status == "INVALID" or status == "INVALID_BLOCK_HASH":
-        return Err.PAYLOAD_INVALIDATED
-    elif status == "SYNCING" or status == "ACCEPTED":
-        if isinstance(block, UnfinishedBlock):
-            return Err.PAYLOAD_NOT_VALIDATED
-        if low_buffer and status == "ACCEPTED":
-            return Err.PAYLOAD_SIDECHAIN
-    elif status != "VALID":
-        return Err.UNKNOWN
-    
-    if not low_buffer and isinstance(block, FullBlock):
-        assert block_record is not None
-        optimistic_import = execution_client.beacon.config.get("optimistic_import", True)
-        
-        status = await execution_client.forkchoice_update(block_record)
-        if status == "INVALID" or status == "INVALID_BLOCK_HASH":
-            return Err.PAYLOAD_INVALIDATED
-        elif status == "SYNCING" or status == "ACCEPTED":
-            if not optimistic_import:
-                return Err.PAYLOAD_NOT_VALIDATED
-        elif status != "VALID":
-            return Err.UNKNOWN
-
     # We repeat the ProofOfSpace check from block header validation here, because we want to fetch blocks
     # from the database too (BlockStore). In `BlockHeaderValidation` we don't have access to the database,
     # just the cache. This check makes sure we retrieve blocks from the database and perform the check with them,
@@ -561,5 +537,32 @@ async def validate_block_body(
             pairs_pks, pairs_msgs, block.transactions_info.aggregated_signature, force_cache
         ):
             return Err.BAD_AGGREGATE_SIGNATURE, None
+    
+    if block.execution_payload is None:
+        return None, npc_result
+    
+    status = await execution_client.new_payload(block.execution_payload)
+    if status == "INVALID" or status == "INVALID_BLOCK_HASH":
+        return Err.PAYLOAD_INVALIDATED, None
+    elif status == "SYNCING" or status == "ACCEPTED":
+        if isinstance(block, UnfinishedBlock):
+            return Err.PAYLOAD_NOT_VALIDATED, None
+        if low_buffer and status == "ACCEPTED":
+            return Err.PAYLOAD_SIDECHAIN, None
+    elif status != "VALID":
+        return Err.UNKNOWN, None
+    
+    if not low_buffer and isinstance(block, FullBlock):
+        assert block_record is not None
+        optimistic_import = execution_client.beacon.config.get("optimistic_import", True)
+        
+        status = await execution_client.forkchoice_update(block_record)
+        if status == "INVALID" or status == "INVALID_BLOCK_HASH":
+            return Err.PAYLOAD_INVALIDATED, None
+        elif status == "SYNCING" or status == "ACCEPTED":
+            if not optimistic_import:
+                return Err.PAYLOAD_NOT_VALIDATED, None
+        elif status != "VALID":
+            return Err.UNKNOWN, None
 
     return None, npc_result

@@ -1556,16 +1556,6 @@ class FullNode:
 
         synced = self.sync_store.get_sync_mode() is False
 
-        try:
-            status = await self.execution_client.new_peak(
-                record,
-                synced,
-            )
-            if status == "ACCEPTED":
-                log.warning(f"Execution chain reorg at height {block.height}!")
-        except Exception as e:
-            self.log.error(f"Exception in fork choice update: {e}")
-
         if synced:
             await self.send_peak_to_timelords(block)
 

@@ -413,8 +413,8 @@ class FullNode:
             while not tx_peak.is_transaction_block:
                 tx_peak = await self.blockchain.get_block_record_from_db(tx_peak.prev_hash)
             
-            if tx_peak.height != 0:
-                try:
+            try:
+                if tx_peak.height != 0:
                     full_tx_peak = await self.blockchain.get_full_block(tx_peak.header_hash)
                     assert full_tx_peak is not None
                     assert full_tx_peak.execution_payload is not None
@@ -425,17 +425,17 @@ class FullNode:
                     elif status != "VALID" and status != "SYNCING" and status != "ACCEPTED":
                         raise RuntimeError("Unexpected payload status.")
                     
-                    status = await self.execution_client.forkchoice_update(tx_peak)
-                    if status == "INVALID" or status == "INVALID_BLOCK_HASH":
-                        raise RuntimeError(f"Fork choice status: {status}. Database is corrupted.")
-                    elif status == "VALID":
-                        self.log.info("Execution chain head has been updated.")
-                    elif status == "SYNCING" or status == "ACCEPTED":
-                        self.log.info("Execution chain synchronization has been started.")
-                    else:
-                        raise RuntimeError("Unexpected fork choice status.")
-                except Exception as e:
-                    self.log.error(f"Exception in peak initialization: {e}")
+                status = await self.execution_client.forkchoice_update(tx_peak)
+                if status == "INVALID" or status == "INVALID_BLOCK_HASH":
+                    raise RuntimeError(f"Fork choice status: {status}. Database is corrupted.")
+                elif status == "VALID":
+                    self.log.info("Execution chain head has been updated.")
+                elif status == "SYNCING" or status == "ACCEPTED":
+                    self.log.info("Execution chain synchronization has been started.")
+                else:
+                    raise RuntimeError("Unexpected fork choice status.")
+            except Exception as e:
+                self.log.error(f"Exception in peak initialization: {e}")
         if self.config["send_uncompact_interval"] != 0:
             sanitize_weight_proof_only = False
             if "sanitize_weight_proof_only" in self.config:

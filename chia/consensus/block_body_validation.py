@@ -45,6 +45,7 @@ async def validate_block_body(
     peak: Optional[BlockRecord],
     block: Union[FullBlock, UnfinishedBlock],
     height: uint32,
+    block_record: Optional[BlockRecord],
     npc_result: Optional[NPCResult],
     fork_point_with_peak: Optional[uint32],
     get_block_generator: Callable[[BlockInfo], Awaitable[Optional[BlockGenerator]]],

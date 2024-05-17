@@ -251,6 +251,14 @@ class Blockchain(BlockchainInterface):
             return AddBlockResult.INVALID_BLOCK, Err(pre_validation_result.error), None
         assert required_iters is not None
 
+        block_record = block_to_block_record(
+            self.constants,
+            self,
+            required_iters,
+            block,
+            None,
+        )
+        
         error_code, _ = await validate_block_body(
             self.constants,
             self.execution_client,
@@ -260,6 +268,7 @@ class Blockchain(BlockchainInterface):
             self.get_peak(),
             block,
             block.height,
+            block_record,
             npc_result,
             fork_point_with_peak,
             self.get_block_generator,
@@ -268,14 +277,7 @@ class Blockchain(BlockchainInterface):
         )
         if error_code is not None:
             return AddBlockResult.INVALID_BLOCK, error_code, None
-
-        block_record = block_to_block_record(
-            self.constants,
-            self,
-            required_iters,
-            block,
-            None,
-        )
+        
         # Always add the block to the database
         async with self.block_store.db_wrapper.writer():
             try:
@@ -635,6 +637,7 @@ class Blockchain(BlockchainInterface):
             self.get_peak(),
             block,
             uint32(prev_height + 1),
+            None,
             npc_result,
             None,
             self.get_block_generator,
